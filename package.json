@@ -4,8 +4,16 @@
   "private": true,
   "description": "Unofficial ioBroker adapter for Anthbot Genie mowers",
   "author": "Nils",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "main": "main.js",
+  "files": [
+    "admin/",
+    "lib/",
+    "LICENSE",
+    "io-package.json",
+    "main.js",
+    "README.md"
+  ],
   "scripts": {
     "check": "node --check main.js && node --check lib/anthbot.js"
   },

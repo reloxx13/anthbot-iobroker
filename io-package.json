@@ -19,7 +19,7 @@
     "authors": [
       "Nils"
     ],
-    "license": "UNLICENSED",
+    "license": "MIT",
     "platform": "Javascript/Node.js",
     "mode": "daemon",
     "type": "household",

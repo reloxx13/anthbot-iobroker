@@ -151,6 +151,9 @@ class AnthbotGenieAdapter extends utils.Adapter {
             throw new AnthbotGenieError("No Anthbot devices found for this account");
         }
 
+        const seenSerials = new Set(devices.map(device => device.serialNumber));
+        await this.removeStaleDeviceContexts(seenSerials);
+
         for (const device of devices) {
             const region = await this.cloudClient.getDeviceRegion(device.serialNumber);
             const existing = this.deviceContexts.get(device.serialNumber);
@@ -170,6 +173,21 @@ class AnthbotGenieAdapter extends utils.Adapter {
             };
             this.deviceContexts.set(device.serialNumber, context);
             await this.ensureDeviceObjects(context);
+        }
+    }
+
+    async removeStaleDeviceContexts(seenSerials) {
+        for (const serial of this.deviceContexts.keys()) {
+            if (seenSerials.has(serial)) {
+                continue;
+            }
+            this.deviceContexts.delete(serial);
+            try {
+                await this.delObjectAsync(serial, { recursive: true });
+                this.log.info(`Removed stale device objects for ${serial}.`);
+            } catch (error) {
+                this.log.warn(`Failed to remove stale device objects for ${serial}: ${error.message}`);
+            }
         }
     }
 
@@ -437,36 +455,10 @@ class AnthbotGenieAdapter extends utils.Adapter {
             return;
         }
 
-        if (command === "startFullMow") {
-            await context.shadowClient.publishServiceCommand({ cmd: "app_state", data: 1 });
-            await context.shadowClient.publishServiceCommand({ cmd: "mow_start", data: 1 });
-        } else if (command === "stopMow") {
-            await context.shadowClient.publishServiceCommand({ cmd: "stop_all_tasks", data: 1 });
-        } else if (command === "returnToDock") {
-            await context.shadowClient.publishServiceCommand({ cmd: "charge_start", data: 1 });
-        } else if (command === "requestRefresh") {
+        const shouldRequestProperties = await this.executeCommand(context, command, value);
+        if (shouldRequestProperties) {
             await context.shadowClient.requestAllProperties();
-        } else if (command === "zoneMow") {
-            const matchedIds = this.resolveManualZoneSelection(context, value);
-            if (!matchedIds.length) {
-                throw new AnthbotGenieError("No matching manual zones found");
-            }
-            await context.shadowClient.publishServiceCommand({
-                cmd: "custom_area_mow_start",
-                data: { id: matchedIds },
-            });
-        } else if (command === "autoZoneMow") {
-            const points = this.resolveAutoZoneSelection(context, value);
-            if (!points.length) {
-                throw new AnthbotGenieError("No matching auto zones found");
-            }
-            await context.shadowClient.publishServiceCommand({
-                cmd: "region_mow_start",
-                data: { points },
-            });
         }
-
-        await context.shadowClient.requestAllProperties();
         await this.delay(1000);
     }
 
@@ -475,71 +467,149 @@ class AnthbotGenieAdapter extends utils.Adapter {
             return;
         }
 
-        const data = context.lastReported || {};
-
-        if (control === "mowHeight") {
-            const intValue = Math.round(Number(value));
-            if (intValue < 30 || intValue > 70 || intValue % 5 !== 0) {
-                throw new AnthbotGenieError("Mow height must be 30..70 in 5 mm steps");
-            }
-            await context.shadowClient.publishServiceCommand({
-                cmd: "param_set",
-                data: { cutter_height: intValue, rid_switch: 0 },
-            });
-        } else if (control === "voiceVolume") {
-            const intValue = Math.round(Number(value));
-            if (intValue < 0 || intValue > 100) {
-                throw new AnthbotGenieError("Voice volume must be 0..100");
-            }
-            await context.shadowClient.publishServiceCommand({
-                cmd: "volume_ctl",
-                data: { volume: intValue },
-            });
-        } else if (control === "customMowingDirection") {
-            const intValue = Math.round(Number(value));
-            if (intValue < 0 || intValue > 180) {
-                throw new AnthbotGenieError("Custom mowing direction must be 0..180");
-            }
-            await context.shadowClient.publishServiceCommand({
-                cmd: "param_set",
-                data: { mow_head: intValue, enable_adaptive_head: 0 },
-            });
-        } else if (control === "customMowingDirectionEnabled") {
-            const enabled = value === true || value === 1 || value === "true";
-            const mowHead = typeof data?.param_set?.mow_head === "number" ? data.param_set.mow_head : 0;
-            await context.shadowClient.publishServiceCommand({
-                cmd: "param_set",
-                data: {
-                    mow_head: mowHead,
-                    enable_adaptive_head: enabled ? 0 : 1,
-                },
-            });
-        } else if (control === "rainPerceptionEnabled") {
-            const enabled = value === true || value === 1 || value === "true";
-            const continueTime = typeof data.rain_continue_time === "number" && data.rain_continue_time > 0 ? data.rain_continue_time : 10800;
-            await context.shadowClient.publishServiceCommand({
-                cmd: "ctl_rainer",
-                data: {
-                    switch: enabled ? 1 : 0,
-                    continue_time: continueTime,
-                },
-            });
-        } else if (control === "rainContinueTimeHours") {
-            const intValue = Math.round(Number(value));
-            if (intValue < 0 || intValue > 8) {
-                throw new AnthbotGenieError("Rain continue time must be 0..8 hours");
-            }
-            await context.shadowClient.publishServiceCommand({
-                cmd: "ctl_rainer",
-                data: {
-                    switch: coerceEnabledValue(data.rain_switch) ? 1 : 0,
-                    continue_time: intValue * 3600,
-                },
-            });
-        }
-
+        await this.executeControl(context, control, value);
         await context.shadowClient.requestAllProperties();
         await this.delay(1000);
+    }
+
+    async executeCommand(context, command, value) {
+        switch (command) {
+            case "startFullMow":
+                await context.shadowClient.publishServiceCommand({ cmd: "app_state", data: 1 });
+                await context.shadowClient.publishServiceCommand({ cmd: "mow_start", data: 1 });
+                return true;
+            case "stopMow":
+                await context.shadowClient.publishServiceCommand({ cmd: "stop_all_tasks", data: 1 });
+                return true;
+            case "returnToDock":
+                await context.shadowClient.publishServiceCommand({ cmd: "charge_start", data: 1 });
+                return true;
+            case "requestRefresh":
+                await context.shadowClient.requestAllProperties();
+                return false;
+            case "zoneMow": {
+                const matchedIds = this.resolveManualZoneSelection(context, value);
+                if (!matchedIds.length) {
+                    throw new AnthbotGenieError("No matching manual zones found");
+                }
+                await context.shadowClient.publishServiceCommand({
+                    cmd: "custom_area_mow_start",
+                    data: { id: matchedIds },
+                });
+                return true;
+            }
+            case "autoZoneMow": {
+                const points = this.resolveAutoZoneSelection(context, value);
+                if (!points.length) {
+                    throw new AnthbotGenieError("No matching auto zones found");
+                }
+                await context.shadowClient.publishServiceCommand({
+                    cmd: "region_mow_start",
+                    data: { points },
+                });
+                return true;
+            }
+            default:
+                throw new AnthbotGenieError(`Unsupported command '${command}'`);
+        }
+    }
+
+    async executeControl(context, control, value) {
+        const data = context.lastReported || {};
+
+        switch (control) {
+            case "mowHeight": {
+                const intValue = this.parseIntegerControlValue(value, {
+                    label: "Mow height",
+                    min: 30,
+                    max: 70,
+                    step: 5,
+                    suffix: "in 5 mm steps",
+                });
+                await context.shadowClient.publishServiceCommand({
+                    cmd: "param_set",
+                    data: { cutter_height: intValue, rid_switch: 0 },
+                });
+                return;
+            }
+            case "voiceVolume": {
+                const intValue = this.parseIntegerControlValue(value, {
+                    label: "Voice volume",
+                    min: 0,
+                    max: 100,
+                });
+                await context.shadowClient.publishServiceCommand({
+                    cmd: "volume_ctl",
+                    data: { volume: intValue },
+                });
+                return;
+            }
+            case "customMowingDirection": {
+                const intValue = this.parseIntegerControlValue(value, {
+                    label: "Custom mowing direction",
+                    min: 0,
+                    max: 180,
+                });
+                await context.shadowClient.publishServiceCommand({
+                    cmd: "param_set",
+                    data: { mow_head: intValue, enable_adaptive_head: 0 },
+                });
+                return;
+            }
+            case "customMowingDirectionEnabled": {
+                const enabled = coerceEnabledValue(value);
+                const mowHead = typeof data?.param_set?.mow_head === "number" ? data.param_set.mow_head : 0;
+                await context.shadowClient.publishServiceCommand({
+                    cmd: "param_set",
+                    data: {
+                        mow_head: mowHead,
+                        enable_adaptive_head: enabled ? 0 : 1,
+                    },
+                });
+                return;
+            }
+            case "rainPerceptionEnabled": {
+                const enabled = coerceEnabledValue(value);
+                const continueTime = typeof data.rain_continue_time === "number" && data.rain_continue_time > 0 ? data.rain_continue_time : 10800;
+                await context.shadowClient.publishServiceCommand({
+                    cmd: "ctl_rainer",
+                    data: {
+                        switch: enabled ? 1 : 0,
+                        continue_time: continueTime,
+                    },
+                });
+                return;
+            }
+            case "rainContinueTimeHours": {
+                const intValue = this.parseIntegerControlValue(value, {
+                    label: "Rain continue time",
+                    min: 0,
+                    max: 8,
+                    suffix: "hours",
+                });
+                await context.shadowClient.publishServiceCommand({
+                    cmd: "ctl_rainer",
+                    data: {
+                        switch: coerceEnabledValue(data.rain_switch) ? 1 : 0,
+                        continue_time: intValue * 3600,
+                    },
+                });
+                return;
+            }
+            default:
+                throw new AnthbotGenieError(`Unsupported control '${control}'`);
+        }
+    }
+
+    parseIntegerControlValue(value, { label, min, max, step = 1, suffix = "" }) {
+        const intValue = Math.round(Number(value));
+        const invalidStep = step > 1 && intValue % step !== 0;
+        if (!Number.isFinite(intValue) || intValue < min || intValue > max || invalidStep) {
+            const rangeText = `${min}..${max}`;
+            const suffixText = suffix ? ` ${suffix}` : "";
+            throw new AnthbotGenieError(`${label} must be ${rangeText}${suffixText}`);
+        }
+        return intValue;
     }
 
     resolveManualZoneSelection(context, value) {
