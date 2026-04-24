@@ -40,23 +40,14 @@
     ]
   },
   "encryptedNative": [
-    "password",
-    "awsSecretKeyDefault",
-    "awsSecretKeyCn",
-    "awsSecretKeyCnNorthwest"
+    "password"
   ],
   "native": {
     "username": "",
     "password": "",
     "areaCode": "49",
     "apiHost": "api.anthbot.com",
-    "pollInterval": 30,
-    "awsAccessKeyDefault": "",
-    "awsSecretKeyDefault": "",
-    "awsAccessKeyCn": "",
-    "awsSecretKeyCn": "",
-    "awsAccessKeyCnNorthwest": "",
-    "awsSecretKeyCnNorthwest": ""
+    "pollInterval": 30
   },
   "objects": [
     {

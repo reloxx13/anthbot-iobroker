@@ -34,42 +34,6 @@
       "step": 1,
       "sm": 12,
       "md": 4
-    },
-    "awsAccessKeyDefault": {
-      "type": "text",
-      "label": "AWS access key (default region)",
-      "sm": 12,
-      "md": 6
-    },
-    "awsSecretKeyDefault": {
-      "type": "password",
-      "label": "AWS secret key (default region)",
-      "sm": 12,
-      "md": 6
-    },
-    "awsAccessKeyCn": {
-      "type": "text",
-      "label": "AWS access key (China regions)",
-      "sm": 12,
-      "md": 6
-    },
-    "awsSecretKeyCn": {
-      "type": "password",
-      "label": "AWS secret key (China regions)",
-      "sm": 12,
-      "md": 6
-    },
-    "awsAccessKeyCnNorthwest": {
-      "type": "text",
-      "label": "AWS access key (cn-northwest-1)",
-      "sm": 12,
-      "md": 6
-    },
-    "awsSecretKeyCnNorthwest": {
-      "type": "password",
-      "label": "AWS secret key (cn-northwest-1)",
-      "sm": 12,
-      "md": 6
     }
   }
 }
