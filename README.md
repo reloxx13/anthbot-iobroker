@@ -20,6 +20,29 @@ Exposed per mower:
 - `zones.*`
 - `raw.*`
 
+## Manual zone mowing
+
+The adapter exposes the mower's manual/custom zones in:
+
+- `<instance>.<serial>.zones.manual`
+
+This state contains a JSON array with the known manual zones. Use the `id` or
+the exact `name` from that list to start mowing.
+
+Write the selection to:
+
+- `<instance>.<serial>.commands.zoneMow`
+
+Accepted values:
+
+- one zone by ID: `3`
+- one zone by name: `Front yard`
+- multiple zones as comma-separated IDs or names: `3,5,Back yard`
+- multiple zones as a JSON array: `[3,5,"Back yard"]`
+
+After a valid write, the adapter sends `custom_area_mow_start` with the matched
+manual zone IDs and clears `commands.zoneMow` again.
+
 Notes:
 
 - this is based on the public Home Assistant integration logic from `vincentjanv/anthbot_genie_ha`
