@@ -19,6 +19,10 @@ const {
     rawRobotStatus,
 } = require("./lib/anthbot");
 
+function t(en, de) {
+    return { en, de };
+}
+
 class AnthbotGenieAdapter extends utils.Adapter {
     constructor(options = {}) {
         super({
@@ -206,12 +210,12 @@ class AnthbotGenieAdapter extends utils.Adapter {
         });
 
         const definitions = [
-            ["info", "channel", "Info", null],
-            ["metrics", "channel", "Metrics", null],
-            ["controls", "channel", "Controls", null],
-            ["commands", "channel", "Commands", null],
-            ["zones", "channel", "Zones", null],
-            ["raw", "channel", "Raw", null],
+            ["info", "channel", t("Info", "Informationen"), null],
+            ["metrics", "channel", t("Metrics", "Messwerte"), null],
+            ["controls", "channel", t("Controls", "Steuerung"), null],
+            ["commands", "channel", t("Commands", "Befehle"), null],
+            ["zones", "channel", t("Zones", "Zonen"), null],
+            ["raw", "channel", t("Raw", "Rohdaten"), null],
         ];
 
         for (const [id, type, name] of definitions) {
@@ -223,43 +227,43 @@ class AnthbotGenieAdapter extends utils.Adapter {
         }
 
         const states = {
-            "info.alias": { type: "string", role: "text", read: true, write: false, name: "Alias" },
-            "info.model": { type: "string", role: "text", read: true, write: false, name: "Model" },
-            "info.region": { type: "string", role: "text", read: true, write: false, name: "Region" },
-            "info.endpoint": { type: "string", role: "text", read: true, write: false, name: "IoT endpoint" },
-            "info.online": { type: "boolean", role: "indicator.reachable", read: true, write: false, name: "Online" },
-            "info.charging": { type: "boolean", role: "indicator.working", read: true, write: false, name: "Charging" },
-            "info.lastServiceCommand": { type: "string", role: "text", read: true, write: false, name: "Last service command" },
-            "info.lastPoll": { type: "string", role: "date", read: true, write: false, name: "Last poll" },
-            "metrics.batteryLevel": { type: "number", role: "value.battery", unit: "%", read: true, write: false, name: "Battery level" },
-            "metrics.mowerStatus": { type: "string", role: "value", read: true, write: false, name: "Mower status" },
-            "metrics.robotStatusRaw": { type: "string", role: "text", read: true, write: false, name: "Raw robot status" },
-            "metrics.cuttingHeight": { type: "number", role: "value", unit: "mm", read: true, write: false, name: "Cutting height" },
-            "metrics.voiceVolume": { type: "number", role: "level.volume", unit: "%", read: true, write: false, name: "Voice volume" },
-            "metrics.mowingTime": { type: "number", role: "value.interval", unit: "s", read: true, write: false, name: "Mowing time" },
-            "metrics.mowingArea": { type: "number", role: "value", unit: "m²", read: true, write: false, name: "Mowing area" },
-            "metrics.customMowingDirection": { type: "number", role: "value", unit: "deg", read: true, write: false, name: "Custom mowing direction" },
-            "metrics.customMowingDirectionEnabled": { type: "boolean", role: "indicator", read: true, write: false, name: "Custom mowing direction enabled" },
-            "metrics.rainPerceptionEnabled": { type: "boolean", role: "indicator", read: true, write: false, name: "Rain perception enabled" },
-            "metrics.rainContinueTime": { type: "number", role: "value.interval", unit: "s", read: true, write: false, name: "Rain continue time" },
-            "controls.mowHeight": { type: "number", role: "level", unit: "mm", min: 30, max: 70, read: true, write: true, name: "Set mow height" },
-            "controls.voiceVolume": { type: "number", role: "level.volume", unit: "%", min: 0, max: 100, read: true, write: true, name: "Set voice volume" },
-            "controls.customMowingDirection": { type: "number", role: "level", unit: "deg", min: 0, max: 180, read: true, write: true, name: "Set custom mowing direction" },
-            "controls.customMowingDirectionEnabled": { type: "boolean", role: "switch", read: true, write: true, name: "Enable custom mowing direction" },
-            "controls.rainPerceptionEnabled": { type: "boolean", role: "switch", read: true, write: true, name: "Enable rain perception" },
-            "controls.rainContinueTimeHours": { type: "number", role: "level", unit: "h", min: 0, max: 8, read: true, write: true, name: "Set rain continue time" },
-            "commands.startFullMow": { type: "boolean", role: "button", read: true, write: true, name: "Start full mow", def: false },
-            "commands.stopMow": { type: "boolean", role: "button", read: true, write: true, name: "Stop mow", def: false },
-            "commands.returnToDock": { type: "boolean", role: "button", read: true, write: true, name: "Return to dock", def: false },
-            "commands.requestRefresh": { type: "boolean", role: "button", read: true, write: true, name: "Request refresh", def: false },
-            "commands.zoneMow": { type: "string", role: "text", read: true, write: true, name: "Start manual zone mow" },
-            "commands.autoZoneMow": { type: "string", role: "text", read: true, write: true, name: "Start auto zone mow" },
-            "zones.manual": { type: "string", role: "json", read: true, write: false, name: "Manual zones" },
-            "zones.auto": { type: "string", role: "json", read: true, write: false, name: "Auto zones" },
-            "zones.activeManualIds": { type: "string", role: "json", read: true, write: false, name: "Active manual zone IDs" },
-            "raw.property": { type: "string", role: "json", read: true, write: false, name: "Raw property shadow" },
-            "raw.service": { type: "string", role: "json", read: true, write: false, name: "Raw service shadow" },
-            "raw.areaDefinition": { type: "string", role: "json", read: true, write: false, name: "Raw area definition" },
+            "info.alias": { type: "string", role: "text", read: true, write: false, name: t("Alias", "Alias") },
+            "info.model": { type: "string", role: "text", read: true, write: false, name: t("Model", "Modell") },
+            "info.region": { type: "string", role: "text", read: true, write: false, name: t("Region", "Region") },
+            "info.endpoint": { type: "string", role: "text", read: true, write: false, name: t("IoT endpoint", "IoT-Endpunkt") },
+            "info.online": { type: "boolean", role: "indicator.reachable", read: true, write: false, name: t("Online", "Online") },
+            "info.charging": { type: "boolean", role: "indicator.working", read: true, write: false, name: t("Charging", "Lädt") },
+            "info.lastServiceCommand": { type: "string", role: "text", read: true, write: false, name: t("Last service command", "Letzter Servicebefehl") },
+            "info.lastPoll": { type: "string", role: "date", read: true, write: false, name: t("Last poll", "Letzte Abfrage") },
+            "metrics.batteryLevel": { type: "number", role: "value.battery", unit: "%", read: true, write: false, name: t("Battery level", "Akkustand") },
+            "metrics.mowerStatus": { type: "string", role: "value", read: true, write: false, name: t("Mower status", "Mäherstatus") },
+            "metrics.robotStatusRaw": { type: "string", role: "text", read: true, write: false, name: t("Raw robot status", "Rohstatus des Roboters") },
+            "metrics.cuttingHeight": { type: "number", role: "value", unit: "mm", read: true, write: false, name: t("Cutting height", "Schnitthöhe") },
+            "metrics.voiceVolume": { type: "number", role: "level.volume", unit: "%", read: true, write: false, name: t("Voice volume", "Sprachlautstärke") },
+            "metrics.mowingTime": { type: "number", role: "value.interval", unit: "s", read: true, write: false, name: t("Mowing time", "Mähzeit") },
+            "metrics.mowingArea": { type: "number", role: "value", unit: "m²", read: true, write: false, name: t("Mowing area", "Gemähte Fläche") },
+            "metrics.customMowingDirection": { type: "number", role: "value", unit: "deg", read: true, write: false, name: t("Custom mowing direction", "Benutzerdefinierte Mährichtung") },
+            "metrics.customMowingDirectionEnabled": { type: "boolean", role: "indicator", read: true, write: false, name: t("Custom mowing direction enabled", "Benutzerdefinierte Mährichtung aktiv") },
+            "metrics.rainPerceptionEnabled": { type: "boolean", role: "indicator", read: true, write: false, name: t("Rain perception enabled", "Regenerkennung aktiv") },
+            "metrics.rainContinueTime": { type: "number", role: "value.interval", unit: "s", read: true, write: false, name: t("Rain continue time", "Regen-Fortsetzungszeit") },
+            "controls.mowHeight": { type: "number", role: "level", unit: "mm", min: 30, max: 70, read: true, write: true, name: t("Set mow height", "Mähhöhe einstellen") },
+            "controls.voiceVolume": { type: "number", role: "level.volume", unit: "%", min: 0, max: 100, read: true, write: true, name: t("Set voice volume", "Sprachlautstärke einstellen") },
+            "controls.customMowingDirection": { type: "number", role: "level", unit: "deg", min: 0, max: 180, read: true, write: true, name: t("Set custom mowing direction", "Benutzerdefinierte Mährichtung einstellen") },
+            "controls.customMowingDirectionEnabled": { type: "boolean", role: "switch", read: true, write: true, name: t("Enable custom mowing direction", "Benutzerdefinierte Mährichtung aktivieren") },
+            "controls.rainPerceptionEnabled": { type: "boolean", role: "switch", read: true, write: true, name: t("Enable rain perception", "Regenerkennung aktivieren") },
+            "controls.rainContinueTimeHours": { type: "number", role: "level", unit: "h", min: 0, max: 8, read: true, write: true, name: t("Set rain continue time", "Regen-Fortsetzungszeit einstellen") },
+            "commands.startFullMow": { type: "boolean", role: "button", read: true, write: true, name: t("Start full mow", "Vollständiges Mähen starten"), def: false },
+            "commands.stopMow": { type: "boolean", role: "button", read: true, write: true, name: t("Stop mow", "Mähen stoppen"), def: false },
+            "commands.returnToDock": { type: "boolean", role: "button", read: true, write: true, name: t("Return to dock", "Zur Ladestation zurückkehren"), def: false },
+            "commands.requestRefresh": { type: "boolean", role: "button", read: true, write: true, name: t("Request refresh", "Aktualisierung anfordern"), def: false },
+            "commands.zoneMow": { type: "string", role: "text", read: true, write: true, name: t("Start manual zone mow", "Manuelles Zonenmähen starten") },
+            "commands.autoZoneMow": { type: "string", role: "text", read: true, write: true, name: t("Start auto zone mow", "Automatisches Zonenmähen starten") },
+            "zones.manual": { type: "string", role: "json", read: true, write: false, name: t("Manual zones", "Manuelle Zonen") },
+            "zones.auto": { type: "string", role: "json", read: true, write: false, name: t("Auto zones", "Automatische Zonen") },
+            "zones.activeManualIds": { type: "string", role: "json", read: true, write: false, name: t("Active manual zone IDs", "Aktive manuelle Zonen-IDs") },
+            "raw.property": { type: "string", role: "json", read: true, write: false, name: t("Raw property shadow", "Rohdaten Property Shadow") },
+            "raw.service": { type: "string", role: "json", read: true, write: false, name: t("Raw service shadow", "Rohdaten Service Shadow") },
+            "raw.areaDefinition": { type: "string", role: "json", read: true, write: false, name: t("Raw area definition", "Rohdaten Flächendefinition") },
         };
 
         for (const [suffix, common] of Object.entries(states)) {

@@ -63,7 +63,10 @@
       "_id": "info.connection",
       "type": "state",
       "common": {
-        "name": "Cloud connection",
+        "name": {
+          "en": "Cloud connection",
+          "de": "Cloud-Verbindung"
+        },
         "type": "boolean",
         "role": "indicator.connected",
         "read": true,

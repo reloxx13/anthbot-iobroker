@@ -3,32 +3,50 @@
   "items": {
     "username": {
       "type": "text",
-      "label": "Anthbot account username",
+      "label": {
+        "en": "Anthbot account username",
+        "de": "Anthbot-Konto Benutzername"
+      },
       "sm": 12,
       "md": 6
     },
     "password": {
       "type": "password",
-      "label": "Anthbot account password",
+      "label": {
+        "en": "Anthbot account password",
+        "de": "Anthbot-Konto Passwort"
+      },
       "sm": 12,
       "md": 6
     },
     "areaCode": {
       "type": "text",
-      "label": "Area code",
-      "help": "Examples: 49 for Germany, 32 for Belgium, 1 for US/Canada",
+      "label": {
+        "en": "Area code",
+        "de": "Ländervorwahl"
+      },
+      "help": {
+        "en": "Examples: 49 for Germany, 32 for Belgium, 1 for US/Canada",
+        "de": "Beispiele: 49 für Deutschland, 32 für Belgien, 1 für USA/Kanada"
+      },
       "sm": 12,
       "md": 4
     },
     "apiHost": {
       "type": "text",
-      "label": "API host",
+      "label": {
+        "en": "API host",
+        "de": "API-Host"
+      },
       "sm": 12,
       "md": 4
     },
     "pollInterval": {
       "type": "number",
-      "label": "Poll interval in seconds",
+      "label": {
+        "en": "Poll interval in seconds",
+        "de": "Abfrageintervall in Sekunden"
+      },
       "min": 10,
       "max": 3600,
       "step": 1,
