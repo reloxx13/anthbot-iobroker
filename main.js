@@ -11,6 +11,7 @@ const {
     compactZonePayload,
     coerceEnabledValue,
     generalMowerStatus,
+    isLikelyAuthenticationError,
     isCharging,
     isCustomDirectionEnabled,
     manualZones,
@@ -96,6 +97,10 @@ class AnthbotGenieAdapter extends utils.Adapter {
     }
 
     async doRefreshAll(forceLogin = false) {
+        return this.runRefreshCycle(forceLogin, false);
+    }
+
+    async runRefreshCycle(forceLogin, retriedAfterAuthFailure) {
         let successful = 0;
         try {
             await this.ensureSession(forceLogin);
@@ -109,6 +114,10 @@ class AnthbotGenieAdapter extends utils.Adapter {
                 }
             }
         } catch (error) {
+            if (!retriedAfterAuthFailure && !forceLogin && isLikelyAuthenticationError(error)) {
+                this.log.info("Anthbot cloud session expired, retrying refresh with a new login.");
+                return this.runRefreshCycle(true, true);
+            }
             this.log.error(`Global refresh failed: ${error.message}`);
         }
 
@@ -260,7 +269,13 @@ class AnthbotGenieAdapter extends utils.Adapter {
                 context.areaDefinition = await this.cloudClient.getDeviceAreaDefinition(context.device.serialNumber);
                 context.lastAreaTime = areaTime;
             } catch (error) {
-                this.log.debug(`Area definition refresh failed for ${context.device.serialNumber}: ${error.message}`);
+                if (isLikelyAuthenticationError(error)) {
+                    await this.ensureSession(true);
+                    context.areaDefinition = await this.cloudClient.getDeviceAreaDefinition(context.device.serialNumber);
+                    context.lastAreaTime = areaTime;
+                } else {
+                    this.log.debug(`Area definition refresh failed for ${context.device.serialNumber}: ${error.message}`);
+                }
             }
         }
 
@@ -347,28 +362,73 @@ class AnthbotGenieAdapter extends utils.Adapter {
             return;
         }
 
+        let commandError = null;
         try {
             if (section === "commands") {
                 await this.handleCommandState(context, command, state.val);
             } else if (section === "controls") {
                 await this.handleControlState(context, command, state.val);
             }
-            await this.refreshDevice(context);
         } catch (error) {
-            this.log.error(`Command failed for ${id}: ${error.message}`);
+            commandError = error;
         } finally {
-            await this.resetWriteState(id, command);
+            try {
+                await this.refreshDevice(context);
+            } catch (refreshError) {
+                this.log.warn(`Post-command refresh failed for ${id}: ${refreshError.message}`);
+            }
+            await this.resetWriteState(id, section, command, context);
+        }
+
+        if (commandError) {
+            this.log.error(`Command failed for ${id}: ${commandError.message}`);
         }
     }
 
-    async resetWriteState(id, command) {
+    async resetWriteState(id, section, command, context) {
         if (["startFullMow", "stopMow", "returnToDock", "requestRefresh"].includes(command)) {
             await this.setStateAsync(id, { val: false, ack: true });
             return;
         }
         if (["zoneMow", "autoZoneMow"].includes(command)) {
             await this.setStateAsync(id, { val: "", ack: true });
+            return;
         }
+        if (section === "controls") {
+            const fallbackValue = this.getControlFallbackValue(context, command);
+            if (fallbackValue !== undefined) {
+                await this.setStateAsync(id, { val: fallbackValue, ack: true });
+            }
+        }
+    }
+
+    getControlFallbackValue(context, control) {
+        const data = context.lastReported || {};
+        if (control === "mowHeight") {
+            if (typeof data?.param_set?.cutter_height === "number") {
+                return data.param_set.cutter_height;
+            }
+            if (typeof data?.mow_remote?.cutter_height === "number") {
+                return data.mow_remote.cutter_height;
+            }
+            return null;
+        }
+        if (control === "voiceVolume") {
+            return typeof data.volume === "number" ? data.volume : null;
+        }
+        if (control === "customMowingDirection") {
+            return typeof data?.param_set?.mow_head === "number" ? data.param_set.mow_head : null;
+        }
+        if (control === "customMowingDirectionEnabled") {
+            return isCustomDirectionEnabled(data);
+        }
+        if (control === "rainPerceptionEnabled") {
+            return coerceEnabledValue(data.rain_switch);
+        }
+        if (control === "rainContinueTimeHours") {
+            return typeof data.rain_continue_time === "number" ? Math.round(data.rain_continue_time / 3600) : null;
+        }
+        return undefined;
     }
 
     async handleCommandState(context, command, value) {

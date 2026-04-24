@@ -25,7 +25,6 @@ Notes:
 - this is based on the public Home Assistant integration logic from `vincentjanv/anthbot_genie_ha`
 - it is a local first version, not a published ioBroker adapter yet
 - the password is stored in encrypted native config
-- the Anthbot/AWS signing keys are intentionally not stored in this public repo and must be configured locally in the adapter instance
 
 ## Credits
 
