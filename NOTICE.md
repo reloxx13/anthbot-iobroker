@@ -1,0 +1,12 @@
+# Legal Notice
+
+This project is an unofficial, community-developed ioBroker adapter for Anthbot
+Genie mowers. It is not affiliated with, endorsed by, sponsored by, or approved
+by Anthbot or any of its affiliates.
+
+All product names, logos, trademarks, and brand names are the property of their
+respective owners. Company, product, and service names are used only for
+identification and interoperability.
+
+If you are a rights holder and want branding or references adjusted or removed,
+please open an issue.

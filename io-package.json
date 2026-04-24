@@ -24,6 +24,7 @@
       "Nils"
     ],
     "license": "MIT",
+    "icon": "anthbot-genie.png",
     "platform": "Javascript/Node.js",
     "mode": "daemon",
     "type": "household",

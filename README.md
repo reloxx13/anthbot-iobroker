@@ -46,6 +46,7 @@ manual zone IDs and clears `commands.zoneMow` again.
 Notes:
 
 - this is based on the public Home Assistant integration logic from `vincentjanv/anthbot_genie_ha`
+- this project is unofficial and not affiliated with or endorsed by Anthbot; see `NOTICE.md`
 - it is a local first version, not a published ioBroker adapter yet
 - the password is stored in encrypted native config
 

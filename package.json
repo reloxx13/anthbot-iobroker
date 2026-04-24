@@ -10,6 +10,7 @@
     "admin/",
     "lib/",
     "LICENSE",
+    "NOTICE.md",
     "io-package.json",
     "main.js",
     "README.md"
