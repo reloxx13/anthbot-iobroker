@@ -1,0 +1,19 @@
+{
+  "name": "iobroker.anthbot-genie",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Unofficial ioBroker adapter for Anthbot Genie mowers",
+  "author": "Nils",
+  "license": "UNLICENSED",
+  "main": "main.js",
+  "scripts": {
+    "check": "node --check main.js && node --check lib/anthbot.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@iobroker/adapter-core": "^3.2.3",
+    "axios": "^1.8.4"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "type": "panel",
+  "items": {
+    "username": {
+      "type": "text",
+      "label": "Anthbot account username",
+      "sm": 12,
+      "md": 6
+    },
+    "password": {
+      "type": "password",
+      "label": "Anthbot account password",
+      "sm": 12,
+      "md": 6
+    },
+    "areaCode": {
+      "type": "text",
+      "label": "Area code",
+      "help": "Examples: 49 for Germany, 32 for Belgium, 1 for US/Canada",
+      "sm": 12,
+      "md": 4
+    },
+    "apiHost": {
+      "type": "text",
+      "label": "API host",
+      "sm": 12,
+      "md": 4
+    },
+    "pollInterval": {
+      "type": "number",
+      "label": "Poll interval in seconds",
+      "min": 10,
+      "max": 3600,
+      "step": 1,
+      "sm": 12,
+      "md": 4
+    },
+    "awsAccessKeyDefault": {
+      "type": "text",
+      "label": "AWS access key (default region)",
+      "sm": 12,
+      "md": 6
+    },
+    "awsSecretKeyDefault": {
+      "type": "password",
+      "label": "AWS secret key (default region)",
+      "sm": 12,
+      "md": 6
+    },
+    "awsAccessKeyCn": {
+      "type": "text",
+      "label": "AWS access key (China regions)",
+      "sm": 12,
+      "md": 6
+    },
+    "awsSecretKeyCn": {
+      "type": "password",
+      "label": "AWS secret key (China regions)",
+      "sm": 12,
+      "md": 6
+    },
+    "awsAccessKeyCnNorthwest": {
+      "type": "text",
+      "label": "AWS access key (cn-northwest-1)",
+      "sm": 12,
+      "md": 6
+    },
+    "awsSecretKeyCnNorthwest": {
+      "type": "password",
+      "label": "AWS secret key (cn-northwest-1)",
+      "sm": 12,
+      "md": 6
+    }
+  }
+}

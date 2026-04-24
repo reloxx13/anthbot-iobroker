@@ -1,0 +1,76 @@
+{
+  "common": {
+    "name": "anthbot-genie",
+    "version": "0.0.1",
+    "news": {
+      "0.0.1": {
+        "en": "Initial local adapter scaffold for Anthbot Genie.",
+        "de": "Erster lokaler Adapter-Entwurf fuer Anthbot Genie."
+      }
+    },
+    "titleLang": {
+      "en": "Anthbot Genie",
+      "de": "Anthbot Genie"
+    },
+    "desc": {
+      "en": "Unofficial cloud adapter for Anthbot Genie mower control and status polling",
+      "de": "Inoffizieller Cloud-Adapter fuer Statusabfrage und Steuerung von Anthbot Genie"
+    },
+    "authors": [
+      "Nils"
+    ],
+    "license": "UNLICENSED",
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "type": "household",
+    "compact": true,
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "loglevel": "info",
+    "main": "main.js",
+    "enabled": false,
+    "materialize": true,
+    "adminUI": {
+      "config": "json"
+    },
+    "dependencies": [
+      {
+        "js-controller": ">=5.0.19"
+      }
+    ]
+  },
+  "encryptedNative": [
+    "password",
+    "awsSecretKeyDefault",
+    "awsSecretKeyCn",
+    "awsSecretKeyCnNorthwest"
+  ],
+  "native": {
+    "username": "",
+    "password": "",
+    "areaCode": "49",
+    "apiHost": "api.anthbot.com",
+    "pollInterval": 30,
+    "awsAccessKeyDefault": "",
+    "awsSecretKeyDefault": "",
+    "awsAccessKeyCn": "",
+    "awsSecretKeyCn": "",
+    "awsAccessKeyCnNorthwest": "",
+    "awsSecretKeyCnNorthwest": ""
+  },
+  "objects": [
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "name": "Cloud connection",
+        "type": "boolean",
+        "role": "indicator.connected",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
+}
