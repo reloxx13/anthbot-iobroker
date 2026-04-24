@@ -48,6 +48,7 @@ class AnthbotGenieAdapter extends utils.Adapter {
             validateStatus: () => true,
         });
 
+        await this.ensureBaseObjects();
         await this.setStateAsync("info.connection", false, true);
 
         if (!this.config.username || !this.config.password) {
@@ -60,6 +61,21 @@ class AnthbotGenieAdapter extends utils.Adapter {
 
         await this.refreshAll(true);
         this.schedulePoll();
+    }
+
+    async ensureBaseObjects() {
+        await this.extendObjectAsync("info.connection", {
+            type: "state",
+            common: {
+                name: t("Cloud connection", "Cloud-Verbindung"),
+                type: "boolean",
+                role: "indicator.connected",
+                read: true,
+                write: false,
+                def: false,
+            },
+            native: {},
+        });
     }
 
     onUnload(callback) {
