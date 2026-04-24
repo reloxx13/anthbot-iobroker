@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "anthbot-genie",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "news": {
+      "0.0.4": {
+        "en": "Add adapter icon, legal notice, German translations, and ensure the connection state object exists.",
+        "de": "Adapter-Icon, rechtlichen Hinweis und deutsche Übersetzungen hinzugefügt sowie das Verbindungsobjekt beim Start sichergestellt."
+      },
       "0.0.3": {
         "en": "Release 0.0.3.",
         "de": "Release 0.0.3."
