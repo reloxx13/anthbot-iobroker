@@ -5,54 +5,127 @@
     "news": {
       "0.0.4": {
         "en": "Add adapter icon, legal notice, German translations, and ensure the connection state object exists.",
-        "de": "Adapter-Icon, rechtlichen Hinweis und deutsche Übersetzungen hinzugefügt sowie das Verbindungsobjekt beim Start sichergestellt."
+        "de": "Adapter-Icon, rechtlichen Hinweis und deutsche Übersetzungen hinzugefügt sowie das Verbindungsobjekt beim Start sichergestellt.",
+        "ru": "Добавлены значок адаптера, правовое уведомление и немецкие переводы, а также обеспечено создание объекта состояния соединения.",
+        "pt": "Adicionado ícone do adaptador, aviso legal e traduções em alemão, além de garantir o objeto de estado da conexão.",
+        "nl": "Adapterpictogram, juridische kennisgeving en Duitse vertalingen toegevoegd en gezorgd dat het verbindingsstatusobject bestaat.",
+        "fr": "Ajout de l'icône de l'adaptateur, de la notice légale et des traductions allemandes, avec création garantie de l'objet d'état de connexion.",
+        "it": "Aggiunte l'icona dell'adattatore, l'avviso legale e le traduzioni in tedesco, garantendo anche l'oggetto di stato della connessione.",
+        "es": "Se añadieron el icono del adaptador, el aviso legal y las traducciones al alemán, y se garantiza el objeto de estado de conexión.",
+        "pl": "Dodano ikonę adaptera, informacje prawne i tłumaczenia niemieckie oraz zapewniono utworzenie obiektu stanu połączenia.",
+        "uk": "Додано піктограму адаптера, юридичне повідомлення й німецькі переклади, а також забезпечено створення об'єкта стану з'єднання.",
+        "zh-cn": "添加适配器图标、法律声明和德语翻译，并确保连接状态对象存在。"
       },
       "0.0.3": {
         "en": "Release 0.0.3.",
-        "de": "Release 0.0.3."
+        "de": "Version 0.0.3.",
+        "ru": "Выпуск 0.0.3.",
+        "pt": "Versão 0.0.3.",
+        "nl": "Release 0.0.3.",
+        "fr": "Version 0.0.3.",
+        "it": "Versione 0.0.3.",
+        "es": "Versión 0.0.3.",
+        "pl": "Wydanie 0.0.3.",
+        "uk": "Випуск 0.0.3.",
+        "zh-cn": "发布 0.0.3。"
       },
       "0.0.2": {
         "en": "Release 0.0.2.",
-        "de": "Release 0.0.2."
+        "de": "Version 0.0.2.",
+        "ru": "Выпуск 0.0.2.",
+        "pt": "Versão 0.0.2.",
+        "nl": "Release 0.0.2.",
+        "fr": "Version 0.0.2.",
+        "it": "Versione 0.0.2.",
+        "es": "Versión 0.0.2.",
+        "pl": "Wydanie 0.0.2.",
+        "uk": "Випуск 0.0.2.",
+        "zh-cn": "发布 0.0.2。"
       },
       "0.0.1": {
         "en": "Initial local adapter scaffold for Anthbot Genie.",
-        "de": "Erster lokaler Adapter-Entwurf fuer Anthbot Genie."
+        "de": "Erster lokaler Adapter-Entwurf für Anthbot Genie.",
+        "ru": "Начальный локальный каркас адаптера для Anthbot Genie.",
+        "pt": "Estrutura inicial local do adaptador para Anthbot Genie.",
+        "nl": "Eerste lokale adapterbasis voor Anthbot Genie.",
+        "fr": "Structure initiale locale de l'adaptateur pour Anthbot Genie.",
+        "it": "Struttura locale iniziale dell'adattatore per Anthbot Genie.",
+        "es": "Estructura inicial local del adaptador para Anthbot Genie.",
+        "pl": "Początkowy lokalny szkielet adaptera dla Anthbot Genie.",
+        "uk": "Початковий локальний каркас адаптера для Anthbot Genie.",
+        "zh-cn": "Anthbot Genie 的初始本地适配器框架。"
       }
     },
     "titleLang": {
       "en": "Anthbot Genie",
-      "de": "Anthbot Genie"
+      "de": "Anthbot Genie",
+      "ru": "Anthbot Genie",
+      "pt": "Anthbot Genie",
+      "nl": "Anthbot Genie",
+      "fr": "Anthbot Genie",
+      "it": "Anthbot Genie",
+      "es": "Anthbot Genie",
+      "pl": "Anthbot Genie",
+      "uk": "Anthbot Genie",
+      "zh-cn": "Anthbot Genie"
     },
     "desc": {
       "en": "Unofficial cloud adapter for Anthbot Genie mower control and status polling",
-      "de": "Inoffizieller Cloud-Adapter fuer Statusabfrage und Steuerung von Anthbot Genie"
+      "de": "Inoffizieller Cloud-Adapter für Statusabfrage und Steuerung von Anthbot Genie",
+      "ru": "Неофициальный облачный адаптер для управления газонокосилками Anthbot Genie и опроса состояния",
+      "pt": "Adaptador de nuvem não oficial para controlar cortadores Anthbot Genie e consultar o estado",
+      "nl": "Onofficiële cloudadapter voor bediening van Anthbot Genie-maaiers en statuspolling",
+      "fr": "Adaptateur cloud non officiel pour le contrôle des tondeuses Anthbot Genie et l'interrogation de leur état",
+      "it": "Adattatore cloud non ufficiale per il controllo dei rasaerba Anthbot Genie e il polling dello stato",
+      "es": "Adaptador en la nube no oficial para controlar cortacéspedes Anthbot Genie y consultar su estado",
+      "pl": "Nieoficjalny adapter chmurowy do sterowania kosiarkami Anthbot Genie i odpytywania stanu",
+      "uk": "Неофіційний хмарний адаптер для керування косарками Anthbot Genie та опитування стану",
+      "zh-cn": "用于控制 Anthbot Genie 割草机并轮询状态的非官方云适配器"
     },
     "authors": [
       "Nils"
     ],
-    "license": "MIT",
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    },
     "icon": "anthbot-genie.png",
+    "extIcon": "https://raw.githubusercontent.com/reloxx13/ioBroker.anthbot-genie/main/admin/anthbot-genie.png",
+    "readme": "https://github.com/reloxx13/ioBroker.anthbot-genie/blob/master/README.md",
+    "keywords": [
+      "anthbot",
+      "genie",
+      "mower",
+      "robot",
+      "lawn"
+    ],
     "platform": "Javascript/Node.js",
     "mode": "daemon",
+    "tier": 2,
     "type": "household",
     "compact": true,
     "connectionType": "cloud",
     "dataSource": "poll",
     "loglevel": "info",
-    "main": "main.js",
     "enabled": false,
-    "materialize": true,
     "adminUI": {
       "config": "json"
     },
     "dependencies": [
       {
-        "js-controller": ">=5.0.19"
+        "js-controller": ">=6.0.11"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=7.6.20"
       }
     ]
   },
   "encryptedNative": [
+    "password"
+  ],
+  "protectedNative": [
     "password"
   ],
   "native": {

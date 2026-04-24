@@ -1,11 +1,25 @@
 {
   "name": "iobroker.anthbot-genie",
   "version": "0.0.4",
-  "private": true,
   "description": "Unofficial ioBroker adapter for Anthbot Genie mowers",
   "author": "Nils",
   "license": "MIT",
   "main": "main.js",
+  "homepage": "https://github.com/reloxx13/ioBroker.anthbot-genie",
+  "keywords": [
+    "ioBroker",
+    "anthbot",
+    "genie",
+    "mower",
+    "adapter"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reloxx13/ioBroker.anthbot-genie.git"
+  },
+  "bugs": {
+    "url": "https://github.com/reloxx13/ioBroker.anthbot-genie/issues"
+  },
   "files": [
     "admin/",
     "lib/",
@@ -16,13 +30,23 @@
     "README.md"
   ],
   "scripts": {
-    "check": "node --check main.js && node --check lib/anthbot.js"
+    "check": "node --check main.js && node --check lib/anthbot.js",
+    "check:repo": "npx @iobroker/repochecker https://github.com/reloxx13/ioBroker.anthbot-genie --noinfo"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.2.3",
+    "@iobroker/adapter-core": "^3.3.2",
     "axios": "^1.8.4"
+  },
+  "devDependencies": {
+    "@alcalzone/release-script": "^5.1.1",
+    "@alcalzone/release-script-plugin-iobroker": "^5.1.2",
+    "@alcalzone/release-script-plugin-license": "^5.1.1",
+    "@alcalzone/release-script-plugin-manual-review": "^5.1.1",
+    "@iobroker/adapter-dev": "^1.5.0",
+    "@iobroker/eslint-config": "^2.2.0",
+    "@iobroker/testing": "^5.2.2"
   }
 }
