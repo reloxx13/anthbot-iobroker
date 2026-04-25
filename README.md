@@ -2,12 +2,22 @@
 
 # ioBroker.anthbot-genie
 
-![NPM version](https://img.shields.io/npm/v/iobroker.anthbot-genie.svg)
-![Downloads](https://img.shields.io/npm/dm/iobroker.anthbot-genie.svg)
+![Test and Release](https://github.com/reloxx13/ioBroker.anthbot-genie/workflows/Test%20and%20Release/badge.svg)
+![Automerge Dependabot](https://github.com/reloxx13/ioBroker.anthbot-genie/workflows/Automerge%20Dependabot/badge.svg)
+[![NPM version](https://img.shields.io/npm/v/iobroker.anthbot-genie.svg)](https://www.npmjs.com/package/iobroker.anthbot-genie)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.anthbot-genie.svg)](https://www.npmjs.com/package/iobroker.anthbot-genie)
+![GitHub release](https://img.shields.io/github/v/release/reloxx13/ioBroker.anthbot-genie)
+![License](https://img.shields.io/github/license/reloxx13/ioBroker.anthbot-genie)
+![ioBroker phase](https://img.shields.io/badge/ioBroker%20phase-testing-yellow)
+[![ioBroker forum](https://img.shields.io/badge/ioBroker-forum-blue)](https://forum.iobroker.net/topic/84392/test-adapter-anthbot-genie-v0.0.x-npm-github)
+
+[![NPM](https://nodei.co/npm/iobroker.anthbot-genie.png?downloads=true)](https://nodei.co/npm/iobroker.anthbot-genie/)
 
 Unofficial ioBroker adapter for [Anthbot Genie robotic lawn mowers](https://de.anthbot.com/products/genie-mahroboter).
 
 The adapter connects to the Anthbot cloud account, discovers bound mowers, reads cloud and IoT shadow data, and exposes status, settings, mower commands, zone data, and raw diagnostic payloads in ioBroker.
+
+This adapter is currently in testing. Please report feedback and test results in the [ioBroker forum Test Adapter anthbot-genie v0.0.x npm/GitHub thread](https://forum.iobroker.net/topic/84392/test-adapter-anthbot-genie-v0.0.x-npm-github).
 
 ## Features
 
