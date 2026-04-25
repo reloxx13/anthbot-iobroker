@@ -52,6 +52,11 @@ Notes:
 
 ## Changelog
 
+### 0.0.7
+
+- Add Dependabot automerge configuration.
+- Update repository metadata for ioBroker checks.
+
 ### 0.0.6
 
 - Fix ioBroker repository checker issues.

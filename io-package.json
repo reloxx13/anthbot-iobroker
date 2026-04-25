@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "anthbot-genie",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "news": {
+      "0.0.7": {
+        "en": "Add Dependabot automerge configuration and update repository metadata.",
+        "de": "Dependabot-Automerge-Konfiguration hinzugefügt und Repository-Metadaten aktualisiert.",
+        "ru": "Добавлена конфигурация автоматического слияния Dependabot и обновлены метаданные репозитория.",
+        "pt": "Adicionada configuração de automerge do Dependabot e atualizados os metadados do repositório.",
+        "nl": "Dependabot-automergeconfiguratie toegevoegd en repositorymetadata bijgewerkt.",
+        "fr": "Ajout de la configuration d'automerge Dependabot et mise à jour des métadonnées du dépôt.",
+        "it": "Aggiunta la configurazione di automerge di Dependabot e aggiornati i metadati del repository.",
+        "es": "Se añadió la configuración de automerge de Dependabot y se actualizaron los metadatos del repositorio.",
+        "pl": "Dodano konfigurację automatycznego scalania Dependabot i zaktualizowano metadane repozytorium.",
+        "uk": "Додано конфігурацію автоматичного злиття Dependabot і оновлено метадані репозиторію.",
+        "zh-cn": "添加 Dependabot 自动合并配置并更新仓库元数据。"
+      },
       "0.0.6": {
         "en": "Fix repository checker issues and move admin config translations to i18n files.",
         "de": "Probleme der Repository-Prüfung behoben und Admin-Konfigurationsübersetzungen in i18n-Dateien verschoben.",
