@@ -1,6 +1,6 @@
 {
   "name": "iobroker.anthbot-genie",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Unofficial ioBroker adapter for Anthbot Genie mowers",
   "author": "Nils",
   "license": "MIT",

@@ -52,6 +52,11 @@ Notes:
 
 ## Changelog
 
+### 0.0.6
+
+- Fix ioBroker repository checker issues.
+- Move admin configuration translations to i18n files.
+
 ### 0.0.5
 
 - Prepare adapter metadata for ioBroker repository checks.
