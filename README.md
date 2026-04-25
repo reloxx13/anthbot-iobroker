@@ -19,6 +19,8 @@ The adapter connects to the Anthbot cloud account, discovers bound mowers, reads
 
 This adapter is currently in testing. Please report feedback and test results in the [ioBroker forum Test Adapter anthbot-genie v0.0.x npm/GitHub thread](https://forum.iobroker.net/topic/84392/test-adapter-anthbot-genie-v0.0.x-npm-github).
 
+An example ioBroker Blockly with conditions for mower automation is available in the [Blockly automation example](https://forum.iobroker.net/topic/84392/test-adapter-anthbot-genie-v0.0.x-npm-github/2?_=1777117406598).
+
 ## Features
 
 - Anthbot cloud login with encrypted password storage in ioBroker native config
