@@ -31,7 +31,8 @@
   ],
   "scripts": {
     "check": "node --check main.js && node --check lib/anthbot.js",
-    "check:repo": "npx @iobroker/repochecker https://github.com/reloxx13/ioBroker.anthbot-genie --noinfo"
+    "check:repo": "npx @iobroker/repochecker https://github.com/reloxx13/ioBroker.anthbot-genie --noinfo",
+    "release": "release-script"
   },
   "engines": {
     "node": ">=20"

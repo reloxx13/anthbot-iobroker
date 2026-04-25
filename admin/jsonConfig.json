@@ -7,8 +7,11 @@
         "en": "Anthbot account username",
         "de": "Anthbot-Konto Benutzername"
       },
+      "xs": 12,
       "sm": 12,
-      "md": 6
+      "md": 6,
+      "lg": 6,
+      "xl": 6
     },
     "password": {
       "type": "password",
@@ -16,8 +19,11 @@
         "en": "Anthbot account password",
         "de": "Anthbot-Konto Passwort"
       },
+      "xs": 12,
       "sm": 12,
-      "md": 6
+      "md": 6,
+      "lg": 6,
+      "xl": 6
     },
     "areaCode": {
       "type": "text",
@@ -29,8 +35,11 @@
         "en": "Examples: 49 for Germany, 32 for Belgium, 1 for US/Canada",
         "de": "Beispiele: 49 für Deutschland, 32 für Belgien, 1 für USA/Kanada"
       },
+      "xs": 12,
       "sm": 12,
-      "md": 4
+      "md": 4,
+      "lg": 4,
+      "xl": 4
     },
     "apiHost": {
       "type": "text",
@@ -38,8 +47,11 @@
         "en": "API host",
         "de": "API-Host"
       },
+      "xs": 12,
       "sm": 12,
-      "md": 4
+      "md": 4,
+      "lg": 4,
+      "xl": 4
     },
     "pollInterval": {
       "type": "number",
@@ -50,8 +62,11 @@
       "min": 10,
       "max": 3600,
       "step": 1,
+      "xs": 12,
       "sm": 12,
-      "md": 4
+      "md": 4,
+      "lg": 4,
+      "xl": 4
     }
   }
 }
