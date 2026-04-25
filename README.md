@@ -1,37 +1,174 @@
-# Anthbot Genie ioBroker Adapter
+![Logo](admin/anthbot-genie.png)
 
-Local scaffold for an unofficial Anthbot Genie ioBroker adapter.
+# ioBroker.anthbot-genie
 
-Current scope:
+[![NPM version](https://img.shields.io/npm/v/iobroker.anthbot-genie.svg)](https://www.npmjs.com/package/iobroker.anthbot-genie)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.anthbot-genie.svg)](https://www.npmjs.com/package/iobroker.anthbot-genie)
+![Number of Installations](https://iobroker.live/badges/anthbot-genie-installed.svg)
+![Current version in stable repository](https://iobroker.live/badges/anthbot-genie-stable.svg)
+[![NPM](https://nodei.co/npm/iobroker.anthbot-genie.png?downloads=true)](https://nodei.co/npm/iobroker.anthbot-genie/)
 
-- Anthbot cloud login
-- device discovery
-- region and IoT endpoint lookup
-- polling of mower property and service shadows
-- writable control states for the main mower commands
-- zone metadata and zone-start commands
+Unofficial ioBroker adapter for Anthbot Genie robotic lawn mowers.
 
-Exposed per mower:
+The adapter connects to the Anthbot cloud account, discovers bound mowers, reads cloud and IoT shadow data, and exposes status, settings, mower commands, zone data, and raw diagnostic payloads in ioBroker.
 
-- `info.*`
-- `metrics.*`
-- `controls.*`
-- `commands.*`
-- `zones.*`
-- `raw.*`
+## Features
 
-## Manual zone mowing
+- Anthbot cloud login with encrypted password storage in ioBroker native config
+- Automatic discovery of mowers bound to the configured Anthbot account
+- Region and IoT endpoint lookup per mower
+- Polling of property and service shadows
+- Status states for connection, online state, battery, mower status, charging state, mowing time, mowing area, rain handling, cutting height, and voice volume
+- Writable control states for cutting height, voice volume, custom mowing direction, and rain settings
+- Command states for full mowing, stop, return to dock, refresh, manual zone mowing, and automatic zone mowing
+- Manual and automatic zone metadata as JSON states
+- Raw property, service, and area payloads for troubleshooting
+
+## Requirements
+
+- ioBroker with js-controller `>= 6.0.11`
+- ioBroker admin `>= 7.6.20`
+- Node.js `>= 20`
+- Anthbot account with at least one bound Genie mower
+- Internet access from the ioBroker host to the Anthbot cloud and AWS IoT endpoint
+
+## Installation
+
+### From ioBroker Admin
+
+Use the custom install dialog in the ioBroker Admin adapter and enter the GitHub repository URL:
+
+```text
+https://github.com/reloxx13/ioBroker.anthbot-genie
+```
+
+To install a specific tag or branch, append it to the URL:
+
+```text
+https://github.com/reloxx13/ioBroker.anthbot-genie#v0.0.7
+```
+
+### From the command line
+
+```bash
+iobroker url https://github.com/reloxx13/ioBroker.anthbot-genie
+```
+
+For a specific release archive:
+
+```bash
+iobroker url https://github.com/reloxx13/ioBroker.anthbot-genie/archive/refs/tags/v0.0.7.tar.gz
+```
+
+## Configuration
+
+Open the adapter instance configuration in ioBroker Admin and set:
+
+| Setting | Description | Default |
+| --- | --- | --- |
+| Anthbot account username | Username or email address of the Anthbot account | empty |
+| Anthbot account password | Anthbot account password, stored encrypted by ioBroker | empty |
+| Area code | Phone or account area code, for example `49` for Germany | `49` |
+| API host | Anthbot cloud API host | `api.anthbot.com` |
+| Poll interval in seconds | Polling interval for mower data. The adapter enforces at least 10 seconds. | `30` |
+
+After saving the configuration, start or restart the adapter instance.
+
+## States
+
+The adapter creates one device tree per mower serial number:
+
+```text
+anthbot-genie.<instance>.<serial>.*
+```
+
+### Info
+
+| State | Type | Description |
+| --- | --- | --- |
+| `info.connection` | boolean | Global adapter cloud connection state |
+| `<serial>.info.alias` | string | Mower alias from Anthbot |
+| `<serial>.info.model` | string | Mower model/category |
+| `<serial>.info.region` | string | Anthbot/AWS IoT region |
+| `<serial>.info.endpoint` | string | IoT endpoint used for shadow access |
+| `<serial>.info.online` | boolean | Online state reported by the mower |
+| `<serial>.info.charging` | boolean | Whether the mower is currently charging |
+| `<serial>.info.lastServiceCommand` | string | Last reported service command |
+| `<serial>.info.lastPoll` | string | ISO timestamp of the last successful poll |
+
+### Metrics
+
+| State | Type | Unit | Description |
+| --- | --- | --- | --- |
+| `<serial>.metrics.batteryLevel` | number | `%` | Battery level |
+| `<serial>.metrics.mowerStatus` | string |  | Normalized mower status |
+| `<serial>.metrics.robotStatusRaw` | string |  | Raw robot status |
+| `<serial>.metrics.cuttingHeight` | number | `mm` | Current cutting height |
+| `<serial>.metrics.voiceVolume` | number | `%` | Current voice volume |
+| `<serial>.metrics.mowingTime` | number | `s` | Reported mowing time |
+| `<serial>.metrics.mowingArea` | number | `m2` | Reported mowing area |
+| `<serial>.metrics.customMowingDirection` | number | `deg` | Custom mowing direction |
+| `<serial>.metrics.customMowingDirectionEnabled` | boolean |  | Custom mowing direction enabled |
+| `<serial>.metrics.rainPerceptionEnabled` | boolean |  | Rain perception enabled |
+| `<serial>.metrics.rainContinueTime` | number | `s` | Delay before continuing after rain |
+
+### Controls
+
+Writable control states update mower settings through the Anthbot IoT service shadow.
+
+| State | Type | Range | Description |
+| --- | --- | --- | --- |
+| `<serial>.controls.mowHeight` | number | `30..70 mm`, 5 mm steps | Set cutting height |
+| `<serial>.controls.voiceVolume` | number | `0..100 %` | Set voice volume |
+| `<serial>.controls.customMowingDirection` | number | `0..180 deg` | Set custom mowing direction |
+| `<serial>.controls.customMowingDirectionEnabled` | boolean | `true`/`false` | Enable or disable custom mowing direction |
+| `<serial>.controls.rainPerceptionEnabled` | boolean | `true`/`false` | Enable or disable rain perception |
+| `<serial>.controls.rainContinueTimeHours` | number | `0..8 h` | Set rain continue time in hours |
+
+### Commands
+
+Command states are writable. Button states are reset to `false` after execution. Zone command states are reset to an empty string after execution.
+
+| State | Type | Description |
+| --- | --- | --- |
+| `<serial>.commands.startFullMow` | boolean | Start full mowing |
+| `<serial>.commands.stopMow` | boolean | Stop all mower tasks |
+| `<serial>.commands.returnToDock` | boolean | Return to the charging dock |
+| `<serial>.commands.requestRefresh` | boolean | Request all mower properties and refresh states |
+| `<serial>.commands.zoneMow` | string | Start mowing one or more manual zones |
+| `<serial>.commands.autoZoneMow` | string | Start mowing one or more automatic zones |
+
+### Zones
+
+| State | Type | Description |
+| --- | --- | --- |
+| `<serial>.zones.manual` | JSON string | Known manual/custom zones |
+| `<serial>.zones.auto` | JSON string | Known automatic/region zones |
+| `<serial>.zones.activeManualIds` | JSON string | Currently active manual zone IDs |
+
+### Raw data
+
+| State | Type | Description |
+| --- | --- | --- |
+| `<serial>.raw.property` | JSON string | Raw property shadow payload |
+| `<serial>.raw.service` | JSON string | Raw service shadow payload |
+| `<serial>.raw.areaDefinition` | JSON string | Raw area definition payload |
+
+## Zone Mowing
 
 The adapter exposes the mower's manual/custom zones in:
 
-- `<instance>.<serial>.zones.manual`
+```text
+<instance>.<serial>.zones.manual
+```
 
-This state contains a JSON array with the known manual zones. Use the `id` or
-the exact `name` from that list to start mowing.
+This state contains a JSON array with known zones. Use the `id` or the exact `name` from that list to start mowing.
 
 Write the selection to:
 
-- `<instance>.<serial>.commands.zoneMow`
+```text
+<instance>.<serial>.commands.zoneMow
+```
 
 Accepted values:
 
@@ -40,15 +177,57 @@ Accepted values:
 - multiple zones as comma-separated IDs or names: `3,5,Back yard`
 - multiple zones as a JSON array: `[3,5,"Back yard"]`
 
-After a valid write, the adapter sends `custom_area_mow_start` with the matched
-manual zone IDs and clears `commands.zoneMow` again.
+After a valid write, the adapter sends `custom_area_mow_start` with the matched manual zone IDs and clears `commands.zoneMow` again.
 
-Notes:
+Automatic zones work similarly through:
 
-- this is based on the public Home Assistant integration logic from `vincentjanv/anthbot_genie_ha`
-- this project is unofficial and not affiliated with or endorsed by Anthbot; see `NOTICE.md`
-- it is a local first version, not a published ioBroker adapter yet
-- the password is stored in encrypted native config
+```text
+<instance>.<serial>.zones.auto
+<instance>.<serial>.commands.autoZoneMow
+```
+
+For automatic zones, the adapter resolves the selected zone IDs or names to the zone coordinates and sends `region_mow_start`.
+
+## Troubleshooting
+
+### Adapter does not connect
+
+- Check username, password, and area code.
+- Confirm that the mower is visible in the Anthbot app with the same account.
+- Increase the adapter log level to `debug` and restart the instance.
+- Check `anthbot-genie.<instance>.info.connection`.
+
+### No mower objects are created
+
+- The Anthbot account must have at least one bound mower.
+- Check the adapter log for `No Anthbot devices found for this account`.
+- Verify that the ioBroker host has internet access.
+
+### Commands do not work
+
+- Check whether status polling works first.
+- Verify that the target state is under the correct mower serial number.
+- For zone commands, compare the written value with the IDs and names in `zones.manual` or `zones.auto`.
+- Check `raw.service` and the adapter log for command errors.
+
+### Native dependency warnings during GitHub install
+
+If ioBroker logs errors for unrelated packages such as `usocket` while installing this adapter from GitHub, check the final exit code and the installed adapter. This adapter does not depend on `usocket`; such warnings usually come from other packages already present in the ioBroker installation.
+
+## Legal Notice
+
+This project is unofficial and is not affiliated with, endorsed by, sponsored by, or approved by Anthbot.
+
+Anthbot and Genie names, marks, and logos belong to their respective owners. See [NOTICE.md](NOTICE.md) for details.
+
+## Credits
+
+Special credit to the Home Assistant Anthbot Genie project, which made the Anthbot cloud flow and command mapping much easier to understand:
+
+- `vincentjanv/anthbot_genie_ha`
+- https://github.com/vincentjanv/anthbot_genie_ha
+
+This ioBroker adapter is an independent project, but it builds on public API research and implementation ideas from that Home Assistant integration.
 
 ## Changelog
 
@@ -82,20 +261,10 @@ Notes:
 
 - Initial local adapter scaffold for Anthbot Genie.
 
-## Credits
-
-Special credit to the Home Assistant Anthbot Genie project that made the
-cloud flow and command mapping much easier to understand:
-
-- `vincentjanv/anthbot_genie_ha`
-- https://github.com/vincentjanv/anthbot_genie_ha
-
-This ioBroker adapter scaffold is an independent local project, but it
-directly builds on the public API research and implementation approach from
-that Home Assistant integration.
-
 ## License
+
+MIT License
 
 Copyright (c) 2026 reloxx13
 
-MIT License. See [LICENSE](LICENSE) for details.
+See [LICENSE](LICENSE) for details.
