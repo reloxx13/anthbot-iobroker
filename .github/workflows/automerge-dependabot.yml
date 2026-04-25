@@ -1,0 +1,23 @@
+name: Automerge Dependabot
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+
+jobs:
+  automerge:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: iobroker-bot-orga/action-automerge-dependabot@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          merge-method: squash
