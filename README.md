@@ -2,13 +2,10 @@
 
 # ioBroker.anthbot-genie
 
-[![NPM version](https://img.shields.io/npm/v/iobroker.anthbot-genie.svg)](https://www.npmjs.com/package/iobroker.anthbot-genie)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.anthbot-genie.svg)](https://www.npmjs.com/package/iobroker.anthbot-genie)
 ![Number of Installations](https://iobroker.live/badges/anthbot-genie-installed.svg)
 ![Current version in stable repository](https://iobroker.live/badges/anthbot-genie-stable.svg)
-[![NPM](https://nodei.co/npm/iobroker.anthbot-genie.png?downloads=true)](https://nodei.co/npm/iobroker.anthbot-genie/)
 
-Unofficial ioBroker adapter for Anthbot Genie robotic lawn mowers.
+Unofficial ioBroker adapter for [Anthbot Genie robotic lawn mowers](https://de.anthbot.com/products/genie-mahroboter).
 
 The adapter connects to the Anthbot cloud account, discovers bound mowers, reads cloud and IoT shadow data, and exposes status, settings, mower commands, zone data, and raw diagnostic payloads in ioBroker.
 
@@ -31,34 +28,6 @@ The adapter connects to the Anthbot cloud account, discovers bound mowers, reads
 - Node.js `>= 20`
 - Anthbot account with at least one bound Genie mower
 - Internet access from the ioBroker host to the Anthbot cloud and AWS IoT endpoint
-
-## Installation
-
-### From ioBroker Admin
-
-Use the custom install dialog in the ioBroker Admin adapter and enter the GitHub repository URL:
-
-```text
-https://github.com/reloxx13/ioBroker.anthbot-genie
-```
-
-To install a specific tag or branch, append it to the URL:
-
-```text
-https://github.com/reloxx13/ioBroker.anthbot-genie#v0.0.7
-```
-
-### From the command line
-
-```bash
-iobroker url https://github.com/reloxx13/ioBroker.anthbot-genie
-```
-
-For a specific release archive:
-
-```bash
-iobroker url https://github.com/reloxx13/ioBroker.anthbot-genie/archive/refs/tags/v0.0.7.tar.gz
-```
 
 ## Configuration
 
@@ -209,10 +178,6 @@ For automatic zones, the adapter resolves the selected zone IDs or names to the 
 - Verify that the target state is under the correct mower serial number.
 - For zone commands, compare the written value with the IDs and names in `zones.manual` or `zones.auto`.
 - Check `raw.service` and the adapter log for command errors.
-
-### Native dependency warnings during GitHub install
-
-If ioBroker logs errors for unrelated packages such as `usocket` while installing this adapter from GitHub, check the final exit code and the installed adapter. This adapter does not depend on `usocket`; such warnings usually come from other packages already present in the ioBroker installation.
 
 ## Legal Notice
 
