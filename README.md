@@ -91,4 +91,6 @@ that Home Assistant integration.
 
 ## License
 
+Copyright (c) 2026 reloxx13
+
 MIT License. See [LICENSE](LICENSE) for details.
