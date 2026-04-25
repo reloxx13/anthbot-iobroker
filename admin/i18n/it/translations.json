@@ -1,0 +1,8 @@
+{
+  "Anthbot account username": "Nome utente dell'account Anthbot",
+  "Anthbot account password": "Password dell'account Anthbot",
+  "Area code": "Prefisso internazionale",
+  "Examples: 49 for Germany, 32 for Belgium, 1 for US/Canada": "Esempi: 49 per Germania, 32 per Belgio, 1 per USA/Canada",
+  "API host": "Host API",
+  "Poll interval in seconds": "Intervallo di interrogazione in secondi"
+}

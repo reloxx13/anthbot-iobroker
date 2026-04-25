@@ -1,12 +1,10 @@
 {
   "type": "panel",
+  "i18n": true,
   "items": {
     "username": {
       "type": "text",
-      "label": {
-        "en": "Anthbot account username",
-        "de": "Anthbot-Konto Benutzername"
-      },
+      "label": "Anthbot account username",
       "xs": 12,
       "sm": 12,
       "md": 6,
@@ -15,10 +13,7 @@
     },
     "password": {
       "type": "password",
-      "label": {
-        "en": "Anthbot account password",
-        "de": "Anthbot-Konto Passwort"
-      },
+      "label": "Anthbot account password",
       "xs": 12,
       "sm": 12,
       "md": 6,
@@ -27,14 +22,8 @@
     },
     "areaCode": {
       "type": "text",
-      "label": {
-        "en": "Area code",
-        "de": "Ländervorwahl"
-      },
-      "help": {
-        "en": "Examples: 49 for Germany, 32 for Belgium, 1 for US/Canada",
-        "de": "Beispiele: 49 für Deutschland, 32 für Belgien, 1 für USA/Kanada"
-      },
+      "label": "Area code",
+      "help": "Examples: 49 for Germany, 32 for Belgium, 1 for US/Canada",
       "xs": 12,
       "sm": 12,
       "md": 4,
@@ -43,10 +32,7 @@
     },
     "apiHost": {
       "type": "text",
-      "label": {
-        "en": "API host",
-        "de": "API-Host"
-      },
+      "label": "API host",
       "xs": 12,
       "sm": 12,
       "md": 4,
@@ -55,10 +41,7 @@
     },
     "pollInterval": {
       "type": "number",
-      "label": {
-        "en": "Poll interval in seconds",
-        "de": "Abfrageintervall in Sekunden"
-      },
+      "label": "Poll interval in seconds",
       "min": 10,
       "max": 3600,
       "step": 1,

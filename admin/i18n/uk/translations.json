@@ -1,0 +1,8 @@
+{
+  "Anthbot account username": "Ім'я користувача облікового запису Anthbot",
+  "Anthbot account password": "Пароль облікового запису Anthbot",
+  "Area code": "Код країни",
+  "Examples: 49 for Germany, 32 for Belgium, 1 for US/Canada": "Приклади: 49 для Німеччини, 32 для Бельгії, 1 для США/Канади",
+  "API host": "Хост API",
+  "Poll interval in seconds": "Інтервал опитування в секундах"
+}
