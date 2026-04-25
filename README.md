@@ -2,8 +2,8 @@
 
 # ioBroker.anthbot-genie
 
-![Number of Installations](https://iobroker.live/badges/anthbot-genie-installed.svg)
-![Current version in stable repository](https://iobroker.live/badges/anthbot-genie-stable.svg)
+![NPM version](https://img.shields.io/npm/v/iobroker.anthbot-genie.svg)
+![Downloads](https://img.shields.io/npm/dm/iobroker.anthbot-genie.svg)
 
 Unofficial ioBroker adapter for [Anthbot Genie robotic lawn mowers](https://de.anthbot.com/products/genie-mahroboter).
 
