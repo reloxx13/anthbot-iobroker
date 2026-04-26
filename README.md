@@ -1,6 +1,6 @@
-![Logo](admin/anthbot-genie.png)
-
 # ioBroker.anthbot-genie
+
+![Logo](admin/anthbot-genie.png)
 
 ![Test and Release](https://github.com/reloxx13/ioBroker.anthbot-genie/workflows/Test%20and%20Release/badge.svg)
 ![Automerge Dependabot](https://github.com/reloxx13/ioBroker.anthbot-genie/workflows/Automerge%20Dependabot/badge.svg)
@@ -82,15 +82,15 @@ anthbot-genie.<instance>.<serial>.*
 | State | Type | Unit | Description |
 | --- | --- | --- | --- |
 | `<serial>.metrics.batteryLevel` | number | `%` | Battery level |
-| `<serial>.metrics.mowerStatus` | string |  | Normalized mower status |
-| `<serial>.metrics.robotStatusRaw` | string |  | Raw robot status |
+| `<serial>.metrics.mowerStatus` | string | | Normalized mower status |
+| `<serial>.metrics.robotStatusRaw` | string | | Raw robot status |
 | `<serial>.metrics.cuttingHeight` | number | `mm` | Current cutting height |
 | `<serial>.metrics.voiceVolume` | number | `%` | Current voice volume |
 | `<serial>.metrics.mowingTime` | number | `s` | Reported mowing time |
 | `<serial>.metrics.mowingArea` | number | `m2` | Reported mowing area |
 | `<serial>.metrics.customMowingDirection` | number | `deg` | Custom mowing direction |
-| `<serial>.metrics.customMowingDirectionEnabled` | boolean |  | Custom mowing direction enabled |
-| `<serial>.metrics.rainPerceptionEnabled` | boolean |  | Rain perception enabled |
+| `<serial>.metrics.customMowingDirectionEnabled` | boolean | | Custom mowing direction enabled |
+| `<serial>.metrics.rainPerceptionEnabled` | boolean | | Rain perception enabled |
 | `<serial>.metrics.rainContinueTime` | number | `s` | Delay before continuing after rain |
 
 ### Controls
@@ -202,11 +202,15 @@ Anthbot and Genie names, marks, and logos belong to their respective owners. See
 Special credit to the Home Assistant Anthbot Genie project, which made the Anthbot cloud flow and command mapping much easier to understand:
 
 - `vincentjanv/anthbot_genie_ha`
-- https://github.com/vincentjanv/anthbot_genie_ha
+- <https://github.com/vincentjanv/anthbot_genie_ha>
 
 This ioBroker adapter is an independent project, but it builds on public API research and implementation ideas from that Home Assistant integration.
 
 ## Changelog
+
+### 0.0.8
+
+- Add consumable channels and values ​​to the adapter definition.
 
 ### 0.0.7
 

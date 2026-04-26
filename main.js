@@ -228,6 +228,7 @@ class AnthbotGenieAdapter extends utils.Adapter {
         const definitions = [
             ["info", "channel", t("Info", "Informationen"), null],
             ["metrics", "channel", t("Metrics", "Messwerte"), null],
+            ["consumable", "channel", t("Consumable", "Verbrauchsmaterial"), null],
             ["controls", "channel", t("Controls", "Steuerung"), null],
             ["commands", "channel", t("Commands", "Befehle"), null],
             ["zones", "channel", t("Zones", "Zonen"), null],
@@ -251,6 +252,9 @@ class AnthbotGenieAdapter extends utils.Adapter {
             "info.charging": { type: "boolean", role: "indicator.working", read: true, write: false, name: t("Charging", "Lädt") },
             "info.lastServiceCommand": { type: "string", role: "text", read: true, write: false, name: t("Last service command", "Letzter Servicebefehl") },
             "info.lastPoll": { type: "string", role: "date", read: true, write: false, name: t("Last poll", "Letzte Abfrage") },
+            "consumable.station": { type: "number", role: "value.usage.station", unit: "%", read: true, write: false, name: t("Station lifetime", "Station Lebensdauer") },
+            "consumable.cameras": { type: "number", role: "value.usage.cameras", unit: "%", read: true, write: false, name: t("Cameras lifetime", "Kameras Lebensdauer") },
+            "consumable.blades": { type: "number", role: "value.usage.blades", unit: "%", read: true, write: false, name: t("Blades lifetime", "Klingen Lebensdauer") },
             "metrics.batteryLevel": { type: "number", role: "value.battery", unit: "%", read: true, write: false, name: t("Battery level", "Akkustand") },
             "metrics.mowerStatus": { type: "string", role: "value", read: true, write: false, name: t("Mower status", "Mäherstatus") },
             "metrics.robotStatusRaw": { type: "string", role: "text", read: true, write: false, name: t("Raw robot status", "Rohstatus des Roboters") },
@@ -353,6 +357,12 @@ class AnthbotGenieAdapter extends utils.Adapter {
             "info.charging": isCharging(data),
             "info.lastServiceCommand": serviceCommand,
             "info.lastPoll": new Date().toISOString(),
+
+            // 2026-04-26: The cloud API misspells "percent" as "pecent" in the robot_maintenance object, so we need to use the wrong spelling here to get the data until it's fixed upstream.
+            "consumable.station": typeof data.robot_maintenance?.ccp_pecent === "number" ? data.robot_maintenance.ccp_pecent : null,
+            "consumable.cameras": typeof data.robot_maintenance?.cl_pecent === "number" ? data.robot_maintenance.cl_pecent : null,
+            "consumable.blades": typeof data.robot_maintenance?.rc_pecent === "number" ? data.robot_maintenance.rc_pecent : null,
+
             "metrics.batteryLevel": typeof data.elec === "number" ? data.elec : null,
             "metrics.mowerStatus": generalMowerStatus(data),
             "metrics.robotStatusRaw": rawRobotStatus(data) || "",
@@ -364,15 +374,18 @@ class AnthbotGenieAdapter extends utils.Adapter {
             "metrics.customMowingDirectionEnabled": isCustomDirectionEnabled(data),
             "metrics.rainPerceptionEnabled": rainPerceptionEnabled,
             "metrics.rainContinueTime": rainContinueTime,
+
             "controls.mowHeight": cutterHeight,
             "controls.voiceVolume": typeof data.volume === "number" ? data.volume : null,
             "controls.customMowingDirection": customDirection,
             "controls.customMowingDirectionEnabled": isCustomDirectionEnabled(data),
             "controls.rainPerceptionEnabled": rainPerceptionEnabled,
             "controls.rainContinueTimeHours": typeof rainContinueTime === "number" ? Math.round(rainContinueTime / 3600) : null,
+
             "zones.manual": JSON.stringify(compactZonePayload(manualZoneList)),
             "zones.auto": JSON.stringify(compactZonePayload(autoZoneList)),
             "zones.activeManualIds": JSON.stringify(activeManualZoneIds(data)),
+
             "raw.property": JSON.stringify(context.lastReported || {}),
             "raw.service": JSON.stringify(context.lastService || {}),
             "raw.areaDefinition": JSON.stringify(context.areaDefinition || {}),

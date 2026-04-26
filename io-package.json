@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "anthbot-genie",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "news": {
+      "0.0.8":{
+        "en": "Add consumable channels and values to the adapter definition.",
+        "de": "Verbrauchskanäle und Werte zur Adapterdefinition hinzugefügt.",
+        "ru": "Добавлены каналы потребляемых материалов и значения в определение адаптера.",
+        "pt": "Adicionar canais de consumíveis e valores à definição do adaptador.",
+        "nl": "Consumable-kanalen en waarden toegevoegd aan de adapterdefinitie.",
+        "fr": "Ajouter des canaux de consommables et des valeurs à la définition de l'adaptateur.",
+        "it": "Aggiungi canali di consumo e valori alla definizione dell'adattatore.",
+        "es": "Agregar canales de consumibles y valores a la definición del adaptador.",
+        "pl": "Dodaj kanały materiałów eksploatacyjnych i wartości do definicji adaptera.",
+        "uk": "Додайте канали расходных материалов и значения в определение адаптера.",
+        "zh-cn": "将消耗品通道和值添加到适配器定义中。"
+      },
       "0.0.7": {
         "en": "Add Dependabot automerge configuration and update repository metadata.",
         "de": "Dependabot-Automerge-Konfiguration hinzugefügt und Repository-Metadaten aktualisiert.",
