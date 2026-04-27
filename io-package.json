@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "anthbot-genie",
-    "version": "0.0.8",
+    "version": "0.0.9-beta.0",
     "news": {
+      "0.0.9-beta.0": {
+        "en": "Add mower service commands and controls.",
+        "de": "Mäher-Servicebefehle und Steuerungen hinzugefügt.",
+        "ru": "Добавлены сервисные команды и элементы управления косилкой.",
+        "pt": "Adicionados comandos de serviço e controles do cortador.",
+        "nl": "Maaier-serviceopdrachten en bedieningselementen toegevoegd.",
+        "fr": "Ajout de commandes de service et de contrôles pour la tondeuse.",
+        "it": "Aggiunti comandi di servizio e controlli del rasaerba.",
+        "es": "Se añadieron comandos de servicio y controles del cortacésped.",
+        "pl": "Dodano polecenia serwisowe i sterowanie kosiarką.",
+        "uk": "Додано сервісні команди та елементи керування косаркою.",
+        "zh-cn": "添加割草机服务命令和控制。"
+      },
       "0.0.8":{
         "en": "Add consumable channels and values to the adapter definition.",
         "de": "Verbrauchskanäle und Werte zur Adapterdefinition hinzugefügt.",
