@@ -254,8 +254,6 @@ This ioBroker adapter is an independent project, but it builds on public API res
 
 ### **WORK IN PROGRESS**
 
-### 0.0.9-beta.0
-
 - Add consumable reset buttons for station, cameras, and blades.
 - Add mower action commands: find robot, grass dump, disk maintenance mode, edge mowing, near-charger mowing, and point mowing.
 - Add task control commands: pause/continue mowing, pause/continue return-to-dock, and end mowing.
