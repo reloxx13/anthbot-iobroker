@@ -254,6 +254,8 @@ This ioBroker adapter is an independent project, but it builds on public API res
 
 ### **WORK IN PROGRESS**
 
+### 0.1.0-beta.0 (2026-04-27)
+
 - Add consumable reset buttons for station, cameras, and blades.
 - Add mower action commands: find robot, grass dump, disk maintenance mode, edge mowing, near-charger mowing, and point mowing.
 - Add task control commands: pause/continue mowing, pause/continue return-to-dock, and end mowing.
@@ -279,22 +281,6 @@ This ioBroker adapter is an independent project, but it builds on public API res
 ### 0.0.5
 
 - Prepare adapter metadata for ioBroker repository checks.
-
-### 0.0.4
-
-- Add adapter icon, legal notice, German translations, and ensure the connection state object exists.
-
-### 0.0.3
-
-- Release 0.0.3.
-
-### 0.0.2
-
-- Release 0.0.2.
-
-### 0.0.1
-
-- Initial local adapter scaffold for Anthbot Genie.
 
 ## License
 
