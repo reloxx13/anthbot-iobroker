@@ -27,7 +27,7 @@ An example ioBroker Blockly with conditions for mower automation is available in
 - Automatic discovery of mowers bound to the configured Anthbot account
 - Region and IoT endpoint lookup per mower
 - Polling of property and service shadows
-- Status states for connection, online state, battery, mower status, charging state, mowing time, mowing area, rain handling, cutting height, and voice volume
+- Status states for connection, online state, battery, mower status, charging state, mowing time, mowing area, rain handling, cutting height, voice volume, and consumable lifetime
 - Writable control states for cutting height, voice volume, custom mowing direction, and rain settings
 - Command states for full mowing, stop, return to dock, refresh, manual zone mowing, and automatic zone mowing
 - Manual and automatic zone metadata as JSON states
@@ -92,6 +92,14 @@ anthbot-genie.<instance>.<serial>.*
 | `<serial>.metrics.customMowingDirectionEnabled` | boolean | | Custom mowing direction enabled |
 | `<serial>.metrics.rainPerceptionEnabled` | boolean | | Rain perception enabled |
 | `<serial>.metrics.rainContinueTime` | number | `s` | Delay before continuing after rain |
+
+### Consumables
+
+| State | Type | Unit | Description |
+| --- | --- | --- | --- |
+| `<serial>.consumable.station` | number | `%` | Station lifetime |
+| `<serial>.consumable.cameras` | number | `%` | Cameras lifetime |
+| `<serial>.consumable.blades` | number | `%` | Blades lifetime |
 
 ### Controls
 
