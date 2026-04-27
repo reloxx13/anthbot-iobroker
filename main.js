@@ -257,8 +257,8 @@ class AnthbotGenieAdapter extends utils.Adapter {
             "consumable.cameras": { type: "number", role: "value.usage.cameras", unit: "%", read: true, write: false, name: t("Cameras lifetime", "Kameras Lebensdauer") },
             "consumable.blades": { type: "number", role: "value.usage.blades", unit: "%", read: true, write: false, name: t("Blades lifetime", "Klingen Lebensdauer") },
             "consumable.station_reset": { type: "boolean", role: "button", read: true, write: true, name: t("Reset station lifetime", "Station-Lebensdauer zurücksetzen"), def: false },
-            "consumable.camera_reset": { type: "boolean", role: "button", read: true, write: true, name: t("Reset cameras lifetime", "Kamera-Lebensdauer zurücksetzen"), def: false },
-            "consumable.blade_reset": { type: "boolean", role: "button", read: true, write: true, name: t("Reset blades lifetime", "Klingen-Lebensdauer zurücksetzen"), def: false },
+            "consumable.cameras_reset": { type: "boolean", role: "button", read: true, write: true, name: t("Reset cameras lifetime", "Kameras-Lebensdauer zurücksetzen"), def: false },
+            "consumable.blades_reset": { type: "boolean", role: "button", read: true, write: true, name: t("Reset blades lifetime", "Klingen-Lebensdauer zurücksetzen"), def: false },
             "metrics.batteryLevel": { type: "number", role: "value.battery", unit: "%", read: true, write: false, name: t("Battery level", "Akkustand") },
             "metrics.mowerStatus": { type: "string", role: "value", read: true, write: false, name: t("Mower status", "Mäherstatus") },
             "metrics.robotStatusRaw": { type: "string", role: "text", read: true, write: false, name: t("Raw robot status", "Rohstatus des Roboters") },
@@ -493,7 +493,7 @@ class AnthbotGenieAdapter extends utils.Adapter {
     }
 
     async resetWriteState(id, section, command, context) {
-        if (["findRobot", "startFullMow", "pauseMow", "continueMow", "stopMow", "returnToDock", "pauseReturnToDock", "continueReturnToDock", "startGrassDump", "startDiskMaintenance", "startEdgeMow", "startNearChargerMow", "endMow", "stopPointMow", "cancelRtkAntennaMoved", "requestRefresh", "station_reset", "camera_reset", "blade_reset"].includes(command)) {
+        if (["findRobot", "startFullMow", "pauseMow", "continueMow", "stopMow", "returnToDock", "pauseReturnToDock", "continueReturnToDock", "startGrassDump", "startDiskMaintenance", "startEdgeMow", "startNearChargerMow", "endMow", "stopPointMow", "cancelRtkAntennaMoved", "requestRefresh", "station_reset", "cameras_reset", "blades_reset"].includes(command)) {
             await this.setStateAsync(id, { val: false, ack: true });
             return;
         }
@@ -676,8 +676,8 @@ class AnthbotGenieAdapter extends utils.Adapter {
 
     async executeConsumableCommand(context, command) {
         const maintenanceTypes = {
-            "blade_reset": 0,
-            "camera_reset": 1,
+            "blades_reset": 0,
+            "cameras_reset": 1,
             "station_reset": 2,
         };
         const robotMaintenance = maintenanceTypes[command];

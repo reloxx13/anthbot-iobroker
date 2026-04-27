@@ -111,8 +111,8 @@ anthbot-genie.<instance>.<serial>.*
 | `<serial>.consumable.cameras` | number | `%` | Cameras lifetime |
 | `<serial>.consumable.blades` | number | `%` | Blades lifetime |
 | `<serial>.consumable.station_reset` | boolean | | Reset station lifetime |
-| `<serial>.consumable.camera_reset` | boolean | | Reset cameras lifetime |
-| `<serial>.consumable.blade_reset` | boolean | | Reset blades lifetime |
+| `<serial>.consumable.cameras_reset` | boolean | | Reset cameras lifetime |
+| `<serial>.consumable.blades_reset` | boolean | | Reset blades lifetime |
 
 The mower accepts consumable reset commands only when the related lifetime value is at or below 5%.
 
