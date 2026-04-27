@@ -27,9 +27,9 @@ An example ioBroker Blockly with conditions for mower automation is available in
 - Automatic discovery of mowers bound to the configured Anthbot account
 - Region and IoT endpoint lookup per mower
 - Polling of property and service shadows
-- Status states for connection, online state, battery, mower status, charging state, mowing time, mowing area, rain handling, cutting height, voice volume, and consumable lifetime
-- Writable control states for cutting height, voice volume, custom mowing direction, and rain settings
-- Command states for full mowing, stop, return to dock, refresh, manual zone mowing, and automatic zone mowing
+- Status states for connection, online state, battery, mower status, charging state, mowing time, mowing area, rain handling, cutting height, voice volume, mowing near the charging pile, and consumable lifetime
+- Writable control states for cutting height, voice volume, custom mowing direction, rain settings, and mowing near the charging pile
+- Command states for full mowing, stop, return to dock, grass dump, disk maintenance mode, edge mowing, mowing near the charging pile, refresh, manual zone mowing, and automatic zone mowing
 - Manual and automatic zone metadata as JSON states
 - Raw property, service, and area payloads for troubleshooting
 
@@ -92,6 +92,16 @@ anthbot-genie.<instance>.<serial>.*
 | `<serial>.metrics.customMowingDirectionEnabled` | boolean | | Custom mowing direction enabled |
 | `<serial>.metrics.rainPerceptionEnabled` | boolean | | Rain perception enabled |
 | `<serial>.metrics.rainContinueTime` | number | `s` | Delay before continuing after rain |
+| `<serial>.metrics.nearChargerMowingEnabled` | boolean | | Mowing near the charging pile enabled |
+| `<serial>.metrics.nearChargerMowHeight` | number | `mm` | Cutting height for mowing near the charging pile |
+| `<serial>.metrics.nearChargerMowCount` | number | | Mowing passes near the charging pile |
+| `<serial>.metrics.nearChargerObstacleAvoidanceEnabled` | boolean | | Obstacle avoidance for mowing near the charging pile |
+| `<serial>.metrics.nearChargerObstacleAvoidanceLevel` | number | | Obstacle avoidance level for mowing near the charging pile |
+| `<serial>.metrics.pointMowActive` | boolean | | Point mowing active |
+| `<serial>.metrics.pointMowX` | number | | Last point mowing X coordinate |
+| `<serial>.metrics.pointMowY` | number | | Last point mowing Y coordinate |
+| `<serial>.metrics.cameraEnabled` | boolean | | Camera enabled |
+| `<serial>.metrics.rtkAntennaMoved` | boolean | | RTK antenna moved warning active |
 
 ### Consumables
 
@@ -100,6 +110,11 @@ anthbot-genie.<instance>.<serial>.*
 | `<serial>.consumable.station` | number | `%` | Station lifetime |
 | `<serial>.consumable.cameras` | number | `%` | Cameras lifetime |
 | `<serial>.consumable.blades` | number | `%` | Blades lifetime |
+| `<serial>.consumable.station_reset` | boolean | | Reset station lifetime |
+| `<serial>.consumable.camera_reset` | boolean | | Reset cameras lifetime |
+| `<serial>.consumable.blade_reset` | boolean | | Reset blades lifetime |
+
+The mower accepts consumable reset commands only when the related lifetime value is at or below 5%.
 
 ### Controls
 
@@ -113,19 +128,40 @@ Writable control states update mower settings through the Anthbot IoT service sh
 | `<serial>.controls.customMowingDirectionEnabled` | boolean | `true`/`false` | Enable or disable custom mowing direction |
 | `<serial>.controls.rainPerceptionEnabled` | boolean | `true`/`false` | Enable or disable rain perception |
 | `<serial>.controls.rainContinueTimeHours` | number | `0..8 h` | Set rain continue time in hours |
+| `<serial>.controls.nearChargerMowingEnabled` | boolean | `true`/`false` | Enable or disable mowing near the charging pile |
+| `<serial>.controls.nearChargerMowHeight` | number | `30..70 mm`, 5 mm steps | Set cutting height for mowing near the charging pile |
+| `<serial>.controls.nearChargerMowCount` | number | `1..3` | Set mowing passes near the charging pile |
+| `<serial>.controls.nearChargerObstacleAvoidanceEnabled` | boolean | `true`/`false` | Enable or disable obstacle avoidance near the charging pile |
+| `<serial>.controls.nearChargerObstacleAvoidanceLevel` | number | `0..2` | Set obstacle avoidance level near the charging pile |
+| `<serial>.controls.cameraEnabled` | boolean | `true`/`false` | Enable or disable the camera |
 
 ### Commands
 
-Command states are writable. Button states are reset to `false` after execution. Zone command states are reset to an empty string after execution.
+Command states are writable. Button states are reset to `false` after execution. Zone command states are reset to an empty string after execution. Consumable reset buttons are exposed under `consumable`.
 
 | State | Type | Description |
 | --- | --- | --- |
+| `<serial>.commands.findRobot` | boolean | Find the robot |
 | `<serial>.commands.startFullMow` | boolean | Start full mowing |
+| `<serial>.commands.pauseMow` | boolean | Pause mowing |
+| `<serial>.commands.continueMow` | boolean | Continue mowing |
 | `<serial>.commands.stopMow` | boolean | Stop all mower tasks |
+| `<serial>.commands.endMow` | boolean | End mowing |
 | `<serial>.commands.returnToDock` | boolean | Return to the charging dock |
+| `<serial>.commands.pauseReturnToDock` | boolean | Pause return to the charging dock |
+| `<serial>.commands.continueReturnToDock` | boolean | Continue return to the charging dock |
+| `<serial>.commands.startGrassDump` | boolean | Start grass dump |
+| `<serial>.commands.startDiskMaintenance` | boolean | Start disk maintenance mode |
+| `<serial>.commands.startEdgeMow` | boolean | Start edge mowing |
+| `<serial>.commands.startNearChargerMow` | boolean | Start mowing near the charging pile |
+| `<serial>.commands.cancelRtkAntennaMoved` | boolean | Cancel the RTK antenna moved warning |
 | `<serial>.commands.requestRefresh` | boolean | Request all mower properties and refresh states |
 | `<serial>.commands.zoneMow` | string | Start mowing one or more manual zones |
 | `<serial>.commands.autoZoneMow` | string | Start mowing one or more automatic zones |
+| `<serial>.commands.pointMow` | string | Start point mowing with `x,y` or `{"x":123,"y":456}` |
+| `<serial>.commands.stopPointMow` | boolean | Stop point mowing |
+
+Availability of `startDiskMaintenance`, `startGrassDump`, `startEdgeMow`, `startNearChargerMow`, `nearChargerMowingEnabled`, `pointMow`, and `cameraEnabled` may depend on mower model, firmware, current mower mode, and map/edge data.
 
 ### Zones
 
@@ -215,6 +251,16 @@ Special credit to the Home Assistant Anthbot Genie project, which made the Anthb
 This ioBroker adapter is an independent project, but it builds on public API research and implementation ideas from that Home Assistant integration.
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+
+- Add consumable reset buttons for station, cameras, and blades.
+- Add mower action commands: find robot, grass dump, disk maintenance mode, edge mowing, near-charger mowing, and point mowing.
+- Add task control commands: pause/continue mowing, pause/continue return-to-dock, and end mowing.
+- Add RTK antenna moved warning cancel command.
+- Add status and control states for mowing near the charging pile, including its mowing parameters.
+- Add camera switch status and control.
+- Add RTK antenna moved warning status.
 
 ### 0.0.8
 
