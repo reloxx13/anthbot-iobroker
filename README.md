@@ -271,6 +271,7 @@ This ioBroker adapter is an independent project, but it builds on public API res
 
 ### **WORK IN PROGRESS**
 
+- Clean up repository readiness metadata and poll timer handling for ioBroker best practices.
 - Align consumable lifetime and network diagnostic state roles with the documented ioBroker state role list.
 
 ### 0.1.0

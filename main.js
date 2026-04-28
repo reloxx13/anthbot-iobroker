@@ -247,9 +247,11 @@ class AnthbotGenieAdapter extends utils.Adapter {
         this.deviceContexts = new Map();
         this.pollTimer = null;
         this.refreshInFlight = null;
+        this.unloaded = false;
     }
 
     async onReady() {
+        this.unloaded = false;
         this.http = axios.create({
             timeout: 15000,
             validateStatus: () => true,
@@ -288,8 +290,9 @@ class AnthbotGenieAdapter extends utils.Adapter {
 
     onUnload(callback) {
         try {
+            this.unloaded = true;
             if (this.pollTimer) {
-                clearTimeout(this.pollTimer);
+                this.clearTimeout(this.pollTimer);
                 this.pollTimer = null;
             }
             callback();
@@ -299,16 +302,21 @@ class AnthbotGenieAdapter extends utils.Adapter {
     }
 
     schedulePoll() {
+        if (this.unloaded) {
+            return;
+        }
         if (this.pollTimer) {
-            clearTimeout(this.pollTimer);
+            this.clearTimeout(this.pollTimer);
         }
         const intervalSeconds = Math.max(10, Number(this.config.pollInterval) || 30);
-        this.pollTimer = setTimeout(async () => {
+        this.pollTimer = this.setTimeout(async () => {
             this.pollTimer = null;
             try {
                 await this.refreshAll();
             } finally {
-                this.schedulePoll();
+                if (!this.unloaded) {
+                    this.schedulePoll();
+                }
             }
         }, intervalSeconds * 1000);
     }
@@ -1220,7 +1228,7 @@ class AnthbotGenieAdapter extends utils.Adapter {
     }
 
     delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+        return new Promise(resolve => this.setTimeout(resolve, ms));
     }
 }
 
