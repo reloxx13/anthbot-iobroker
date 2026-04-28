@@ -273,7 +273,9 @@ This ioBroker adapter is an independent project, but it builds on public API res
 
 ### **WORK IN PROGRESS**
 
-- Add Home Assistant integration-derived diagnostics for model names, region fallback, errors, RTK, map, firmware, OTA, network, and GPS/location data.
+### 0.1.0-beta.1
+
+- Add expanded diagnostics for model names, region fallback, errors, RTK, map, firmware, OTA, network, and GPS/location data.
 - Correct consumable maintenance mapping to blades, cameras, and charging port.
 - Add consumable reset buttons for charging port, cameras, and blades.
 - Remove metric states duplicated by writable controls and group mowing controls by full-map, zone, and near-charger mowing.
