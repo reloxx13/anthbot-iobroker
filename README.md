@@ -27,7 +27,8 @@ An example ioBroker Blockly with conditions for mower automation is available in
 - Automatic discovery of mowers bound to the configured Anthbot account
 - Region and IoT endpoint lookup per mower
 - Polling of property and service shadows
-- Status states for connection, online state, battery, mower status, charging state, mowing time, mowing area, rain handling, cutting height, voice volume, mowing near the charging pile, and consumable lifetime
+- Status states for connection, online state, battery, mower status, charging state, mowing time, mowing area, map, error, rain handling, cutting height, voice volume, mowing near the charging pile, and consumable lifetime
+- Diagnostic states for RTK, firmware, OTA, network, GPS/location, map lifecycle, and mower error data
 - Writable control states for cutting height, voice volume, custom mowing direction, rain settings, and mowing near the charging pile
 - Command states for full mowing, stop, return to dock, grass dump, disk maintenance mode, edge mowing, mowing near the charging pile, refresh, manual zone mowing, and automatic zone mowing
 - Manual and automatic zone metadata as JSON states
@@ -102,15 +103,37 @@ anthbot-genie.<instance>.<serial>.*
 | `<serial>.metrics.pointMowY` | number | | Last point mowing Y coordinate |
 | `<serial>.metrics.cameraEnabled` | boolean | | Camera enabled |
 | `<serial>.metrics.rtkAntennaMoved` | boolean | | RTK antenna moved warning active |
+| `<serial>.metrics.zoneCount` | number | | Number of manual zones |
+| `<serial>.metrics.autoZoneCount` | number | | Number of automatic zones |
+| `<serial>.metrics.totalMapArea` | number | `m2` | Total mapped area |
+| `<serial>.metrics.mapStatus` | string | | Raw map status |
+| `<serial>.metrics.errorCode` | number | | Last mower error code |
+| `<serial>.metrics.errorDescription` | string | | Human-readable error description when known |
+| `<serial>.metrics.errorActive` | boolean | | Whether a non-zero mower error is active |
+
+### Location
+
+| State | Type | Description |
+| --- | --- | --- |
+| `<serial>.location.gpsLatitude` | number | GPS latitude from anti-loss position data |
+| `<serial>.location.gpsLongitude` | number | GPS longitude from anti-loss position data |
+| `<serial>.location.poseX` | number | Local mower pose X |
+| `<serial>.location.poseY` | number | Local mower pose Y |
+| `<serial>.location.poseYaw` | number | Local mower pose yaw |
+| `<serial>.location.poseType` | string | Reported pose type |
+
+### Diagnostics
+
+The `diagnostics` channel exposes read-only troubleshooting data derived from the mower shadow, including RTK state, RTK base state, camera/map/network flags, obstacle avoidance, firmware versions, OTA progress, WiFi/SIM details, timestamps, and the next appointment.
 
 ### Consumables
 
 | State | Type | Unit | Description |
 | --- | --- | --- | --- |
-| `<serial>.consumable.station` | number | `%` | Station lifetime |
+| `<serial>.consumable.chargingPort` | number | `%` | Charging port lifetime |
 | `<serial>.consumable.cameras` | number | `%` | Cameras lifetime |
 | `<serial>.consumable.blades` | number | `%` | Blades lifetime |
-| `<serial>.consumable.station_reset` | boolean | | Reset station lifetime |
+| `<serial>.consumable.charging_port_reset` | boolean | | Reset charging port lifetime |
 | `<serial>.consumable.cameras_reset` | boolean | | Reset cameras lifetime |
 | `<serial>.consumable.blades_reset` | boolean | | Reset blades lifetime |
 
@@ -243,10 +266,10 @@ Anthbot and Genie names, marks, and logos belong to their respective owners. See
 
 ## Credits
 
-Special credit to the Home Assistant Anthbot Genie project, which made the Anthbot cloud flow and command mapping much easier to understand:
+Special credit to the Home Assistant Anthbot Genie projects, which made the Anthbot cloud flow and command mapping much easier to understand:
 
-- `vincentjanv/anthbot_genie_ha`
-- <https://github.com/vincentjanv/anthbot_genie_ha>
+- [vincentjanv](https://github.com/vincentjanv/anthbot_genie_ha)
+- [AdrianTIonut](https://github.com/AdrianTIonut/anthbot_genie_ha)
 
 This ioBroker adapter is an independent project, but it builds on public API research and implementation ideas from that Home Assistant integration.
 
@@ -254,9 +277,12 @@ This ioBroker adapter is an independent project, but it builds on public API res
 
 ### **WORK IN PROGRESS**
 
-### 0.1.0-beta.0 (2026-04-27)
+- Add Home Assistant integration-derived diagnostics for model names, region fallback, errors, RTK, map, firmware, OTA, network, and GPS/location data.
+- Correct consumable maintenance mapping to blades, cameras, and charging port.
+- Add consumable reset buttons for charging port, cameras, and blades.
 
-- Add consumable reset buttons for station, cameras, and blades.
+### 0.1.0-beta.0
+
 - Add mower action commands: find robot, grass dump, disk maintenance mode, edge mowing, near-charger mowing, and point mowing.
 - Add task control commands: pause/continue mowing, pause/continue return-to-dock, and end mowing.
 - Add RTK antenna moved warning cancel command.
