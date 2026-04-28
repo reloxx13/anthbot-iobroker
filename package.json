@@ -30,9 +30,11 @@
     "README.md"
   ],
   "scripts": {
-    "check": "node --check main.js && node --check lib/anthbot.js",
-    "test:package": "npm run check",
-    "test:integration": "npm run check",
+    "check": "node --check main.js && node --check lib/anthbot.js && node --check test/package/testPackageFiles.js && node --check test/integration/testStartup.js && node --check test/unit/anthbot.test.js",
+    "test:js": "mocha \"test/unit/**/*.test.js\"",
+    "test:package": "mocha test/package --exit",
+    "test:integration": "mocha test/integration --exit",
+    "test": "npm run check && npm run test:js && npm run test:package",
     "check:repo": "npx @iobroker/repochecker https://github.com/reloxx13/ioBroker.anthbot-genie --noinfo",
     "release": "release-script"
   },
