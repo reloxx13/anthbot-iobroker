@@ -271,6 +271,8 @@ This ioBroker adapter is an independent project, but it builds on public API res
 
 ### **WORK IN PROGRESS**
 
+- Align consumable lifetime and network diagnostic state roles with the documented ioBroker state role list.
+
 ### 0.1.0
 
 - Add expanded diagnostics for model names, region fallback, errors, RTK, map, firmware, OTA, network, and GPS/location data.
