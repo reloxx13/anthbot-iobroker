@@ -271,6 +271,16 @@ This ioBroker adapter is an independent project, but it builds on public API res
 
 ### **WORK IN PROGRESS**
 
+### 0.1.0
+
+- Add expanded diagnostics for model names, region fallback, errors, RTK, map, firmware, OTA, network, and GPS/location data.
+- Add consumable reset buttons and correct the maintenance mapping for charging port, cameras, and blades.
+- Add grouped command states for device, docking, maintenance, and mowing actions.
+- Add writable mowing controls grouped by full-map, zone, near-charger, rain, and voice settings.
+- Add full-map mowing control to include edge trimming.
+- Fix near-charger mowing enable control to use the mower shadow setting.
+- Remove unsupported camera-enabled and docking resume-return controls.
+
 ### 0.1.0-beta.2
 
 - Add full-map mowing control to include edge trimming.

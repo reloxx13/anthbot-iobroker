@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "anthbot-genie",
-    "version": "0.1.0-beta.2",
+    "version": "0.1.0",
     "news": {
+      "0.1.0": {
+        "en": "Add expanded diagnostics, grouped state layout, consumable resets, mower action commands, and writable mowing controls.\nAdd full-map edge trimming control and fix near-charger mowing enable control.\nRemove unsupported camera and docking resume controls.",
+        "de": "Erweiterte Diagnosewerte, gruppierte State-Struktur, Verbrauchsmaterial-Resets, Mäher-Aktionsbefehle und schreibbare Mähsteuerungen hinzugefügt.\nVollflächen-Kantenschnitt-Steuerung hinzugefügt und Aktivierung des Mähens nahe der Ladestation korrigiert.\nNicht unterstützte Kamera- und Docking-Fortsetzen-Steuerungen entfernt.",
+        "ru": "Добавлены расширенная диагностика, сгруппированная структура состояний, сброс расходников, команды действий косилки и записываемые элементы управления кошением.\nДобавлено управление обрезкой краев для полного кошения карты и исправлено включение кошения возле зарядной станции.\nУдалены неподдерживаемые элементы управления камерой и продолжением возврата на базу.",
+        "pt": "Adicionados diagnósticos expandidos, estrutura de estados agrupada, resets de consumíveis, comandos de ação do cortador e controles de corte graváveis.\nAdicionado controle de corte de borda para corte de mapa completo e corrigido o controle de ativação do corte perto da estação.\nRemovidos controles não suportados de câmera e retomada do retorno à base.",
+        "nl": "Uitgebreide diagnostiek, gegroepeerde statusstructuur, verbruiksresets, maaier-acties en schrijfbare maaibesturing toegevoegd.\nBesturing voor randmaaien bij volledig kaartmaaien toegevoegd en maaien nabij het laadstation gecorrigeerd.\nNiet-ondersteunde camera- en docking-hervatbesturing verwijderd.",
+        "fr": "Ajout de diagnostics étendus, d'une structure d'états groupée, de réinitialisations de consommables, de commandes d'action et de contrôles de tonte inscriptibles.\nAjout du contrôle de coupe des bordures pour la tonte de toute la carte et correction du contrôle près de la station.\nSuppression des contrôles non pris en charge pour la caméra et la reprise du retour à la station.",
+        "it": "Aggiunti diagnostica estesa, struttura degli stati raggruppata, reset dei consumabili, comandi di azione del rasaerba e controlli di taglio scrivibili.\nAggiunto il controllo del taglio dei bordi per il taglio completo della mappa e corretto il controllo vicino alla stazione.\nRimossi i controlli non supportati per fotocamera e ripresa del ritorno alla base.",
+        "es": "Añadidos diagnósticos ampliados, estructura de estados agrupada, reinicios de consumibles, comandos de acción del cortacésped y controles de corte escribibles.\nAñadido control de corte de bordes para el corte de mapa completo y corregido el control cerca de la estación.\nEliminados los controles no compatibles de cámara y reanudación del retorno a la base.",
+        "pl": "Dodano rozszerzoną diagnostykę, pogrupowaną strukturę stanów, reset materiałów eksploatacyjnych, polecenia kosiarki i zapisywalne sterowanie koszeniem.\nDodano sterowanie koszeniem krawędzi dla pełnego koszenia mapy i poprawiono sterowanie przy stacji.\nUsunięto nieobsługiwane sterowanie kamerą i wznawianiem powrotu do stacji.",
+        "uk": "Додано розширену діагностику, згруповану структуру станів, скидання витратних матеріалів, команди дій косарки та записувані елементи керування косінням.\nДодано керування обрізанням країв для повного косіння карти та виправлено керування біля зарядної станції.\nВилучено непідтримувані елементи керування камерою та продовженням повернення до бази.",
+        "zh-cn": "添加扩展诊断、分组状态结构、耗材重置、割草机动作命令和可写割草控制。\n添加全地图割草的边缘修剪控制，并修正充电站附近割草启用控制。\n移除不支持的摄像头和继续回充控制。"
+      },
       "0.1.0-beta.2": {
         "en": "Add full-map edge trimming control.\nRemove unsupported camera and docking resume controls.\nFix near-charger mowing enable control to use the mower shadow setting.",
         "de": "Vollflächen-Kantenschnitt-Steuerung hinzugefügt.\nNicht unterstützte Kamera- und Docking-Fortsetzen-Steuerungen entfernt.\nSteuerung zum Aktivieren des Mähens nahe der Ladestation auf die Mäher-Shadow-Einstellung korrigiert.",
