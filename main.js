@@ -157,6 +157,7 @@ const DEVICE_STATE_DEFINITIONS = {
     "diagnostics.time.areaUpdated": { type: "string", role: "date", read: true, write: false, name: t("Area last updated", "Fläche zuletzt aktualisiert") },
     "diagnostics.time.nextAppointment": { type: "string", role: "date", read: true, write: false, name: t("Next appointment", "Nächster Termin") },
     "controls.fullMapMowing.mowHeight": { type: "number", role: "level", unit: "mm", min: 30, max: 70, read: true, write: true, name: t("Set full-map mow height", "Vollflächen-Mähhöhe einstellen") },
+    "controls.fullMapMowing.includeEdgeTrimming": { type: "boolean", role: "switch", read: true, write: true, name: t("Include edge trimming in full-map mowing", "Kantenschnitt beim Vollflächenmähen einschließen") },
     "controls.fullMapMowing.customMowingDirection": { type: "number", role: "level", unit: "deg", min: 0, max: 180, read: true, write: true, name: t("Set full-map custom mowing direction", "Vollflächen-Mährichtung einstellen") },
     "controls.fullMapMowing.customMowingDirectionEnabled": { type: "boolean", role: "switch", read: true, write: true, name: t("Enable full-map custom mowing direction", "Vollflächen-Mährichtung aktivieren") },
     "controls.zoneMowing.mowHeight": { type: "number", role: "level", unit: "mm", min: 30, max: 70, read: true, write: true, name: t("Set zone mow height", "Zonen-Mähhöhe einstellen") },
@@ -173,13 +174,11 @@ const DEVICE_STATE_DEFINITIONS = {
     "controls.nearChargerMowing.mowCount": { type: "number", role: "level", min: 1, max: 3, read: true, write: true, name: t("Set near charger mow count", "Mähdurchgänge nahe der Ladestation einstellen") },
     "controls.nearChargerMowing.obstacleAvoidanceEnabled": { type: "boolean", role: "switch", read: true, write: true, name: t("Enable near charger obstacle avoidance", "Hindernisvermeidung nahe der Ladestation aktivieren") },
     "controls.nearChargerMowing.obstacleAvoidanceLevel": { type: "number", role: "level", min: 0, max: 2, read: true, write: true, name: t("Set near charger obstacle avoidance level", "Hindernisvermeidung nahe der Ladestation einstellen") },
-    "controls.cameraEnabled": { type: "boolean", role: "switch", read: true, write: true, name: t("Enable camera", "Kamera aktivieren") },
     "commands.device.find": { type: "boolean", role: "button", read: true, write: true, name: t("Find robot", "Roboter finden"), def: false },
     "commands.device.refresh": { type: "boolean", role: "button", read: true, write: true, name: t("Request refresh", "Aktualisierung anfordern"), def: false },
     "commands.device.cancelRtkAntennaMoved": { type: "boolean", role: "button", read: true, write: true, name: t("Cancel RTK antenna moved warning", "RTK-Antenne-bewegt-Warnung abbrechen"), def: false },
     "commands.docking.startReturn": { type: "boolean", role: "button", read: true, write: true, name: t("Return to dock", "Zur Ladestation zurückkehren"), def: false },
     "commands.docking.pauseReturn": { type: "boolean", role: "button", read: true, write: true, name: t("Pause return to dock", "Rückfahrt zur Ladestation pausieren"), def: false },
-    "commands.docking.resumeReturn": { type: "boolean", role: "button", read: true, write: true, name: t("Resume return to dock", "Rückfahrt zur Ladestation fortsetzen"), def: false },
     "commands.maintenance.startGrassDump": { type: "boolean", role: "button", read: true, write: true, name: t("Start grass dump", "Grasablage starten"), def: false },
     "commands.maintenance.startDiskMaintenance": { type: "boolean", role: "button", read: true, write: true, name: t("Start disk maintenance mode", "Scheibenwartungsmodus starten"), def: false },
     "commands.mowing.startFullMap": { type: "boolean", role: "button", read: true, write: true, name: t("Start full-map mow", "Vollflächenmähen starten"), def: false },
@@ -207,7 +206,6 @@ const BOOLEAN_COMMANDS = [
     "device.cancelRtkAntennaMoved",
     "docking.startReturn",
     "docking.pauseReturn",
-    "docking.resumeReturn",
     "maintenance.startGrassDump",
     "maintenance.startDiskMaintenance",
     "mowing.startFullMap",
@@ -543,11 +541,10 @@ class AnthbotGenieAdapter extends utils.Adapter {
         const customDirection = typeof data?.param_set?.mow_head === "number" ? data.param_set.mow_head : null;
         const rainContinueTime = typeof data.rain_continue_time === "number" ? data.rain_continue_time : null;
         const rainPerceptionEnabled = coerceEnabledValue(data.rain_switch);
-        const nearChargerMowingEnabled = coerceEnabledValue(data.near_chg_mow_ctl);
+        const nearChargerMowingEnabled = coerceEnabledValue(safeGet(data, "param_set", "nest_switch"));
         const nearChargerSettings = this.nearChargerMowingSettings(data);
         const pointMow = data?.mow_point && typeof data.mow_point === "object" ? data.mow_point : {};
         const rtkAntennaMoved = coerceEnabledValue(data?.rtk_move_sta?.value);
-        const cameraEnabled = coerceEnabledValue(data.camera_switch);
         const serviceCommand = typeof data?._service_reported?.cmd === "string" ? data._service_reported.cmd : "";
         const pose = data?.pose && typeof data.pose === "object" ? data.pose : {};
 
@@ -637,6 +634,7 @@ class AnthbotGenieAdapter extends utils.Adapter {
             "diagnostics.time.nextAppointment": asIsoTimestamp(data.appointment_time) || "",
 
             "controls.fullMapMowing.mowHeight": cutterHeight,
+            "controls.fullMapMowing.includeEdgeTrimming": coerceEnabledValue(safeGet(data, "param_set", "rid_switch")),
             "controls.fullMapMowing.customMowingDirection": customDirection,
             "controls.fullMapMowing.customMowingDirectionEnabled": isCustomDirectionEnabled(data),
             "controls.zoneMowing.mowHeight": cutterHeight,
@@ -653,8 +651,6 @@ class AnthbotGenieAdapter extends utils.Adapter {
             "controls.nearChargerMowing.mowCount": nearChargerSettings.mow_count,
             "controls.nearChargerMowing.obstacleAvoidanceEnabled": coerceEnabledValue(nearChargerSettings.pobctl_switch),
             "controls.nearChargerMowing.obstacleAvoidanceLevel": nearChargerSettings.pobctl_level,
-            "controls.cameraEnabled": cameraEnabled,
-
             "zones.manual.list": JSON.stringify(compactZonePayload(manualZoneList)),
             "zones.manual.activeIds": JSON.stringify(activeManualZoneIds(data)),
             "zones.autoList": JSON.stringify(compactZonePayload(autoZoneList)),
@@ -746,6 +742,9 @@ class AnthbotGenieAdapter extends utils.Adapter {
         if (control === "fullMapMowing.customMowingDirection" || control === "zoneMowing.customMowingDirection") {
             return typeof data?.param_set?.mow_head === "number" ? data.param_set.mow_head : null;
         }
+        if (control === "fullMapMowing.includeEdgeTrimming") {
+            return coerceEnabledValue(safeGet(data, "param_set", "rid_switch"));
+        }
         if (control === "fullMapMowing.customMowingDirectionEnabled" || control === "zoneMowing.customMowingDirectionEnabled") {
             return isCustomDirectionEnabled(data);
         }
@@ -765,7 +764,7 @@ class AnthbotGenieAdapter extends utils.Adapter {
             return typeof data.rain_continue_time === "number" ? Math.round(data.rain_continue_time / 3600) : null;
         }
         if (control === "nearChargerMowing.enabled") {
-            return coerceEnabledValue(data.near_chg_mow_ctl);
+            return coerceEnabledValue(safeGet(data, "param_set", "nest_switch"));
         }
         if (control === "nearChargerMowing.mowHeight") {
             return this.nearChargerMowingSettings(data).cutter_height;
@@ -778,9 +777,6 @@ class AnthbotGenieAdapter extends utils.Adapter {
         }
         if (control === "nearChargerMowing.obstacleAvoidanceLevel") {
             return this.nearChargerMowingSettings(data).pobctl_level;
-        }
-        if (control === "cameraEnabled") {
-            return coerceEnabledValue(data.camera_switch);
         }
         return undefined;
     }
@@ -847,9 +843,6 @@ class AnthbotGenieAdapter extends utils.Adapter {
                 return true;
             case "docking.pauseReturn":
                 await context.shadowClient.publishServiceCommand({ cmd: "charge_pause" });
-                return true;
-            case "docking.resumeReturn":
-                await context.shadowClient.publishServiceCommand({ cmd: "charge_continue" });
                 return true;
             case "maintenance.startGrassDump":
                 await context.shadowClient.publishServiceCommand({ cmd: "start_dump" });
@@ -931,7 +924,15 @@ class AnthbotGenieAdapter extends utils.Adapter {
                 });
                 await context.shadowClient.publishServiceCommand({
                     cmd: "param_set",
-                    data: { ...this.globalMowingSettings(data), cutter_height: intValue, rid_switch: control.startsWith("zoneMowing.") ? 1 : 0 },
+                    data: { ...this.globalMowingSettings(data), cutter_height: intValue },
+                });
+                return;
+            }
+            case "fullMapMowing.includeEdgeTrimming": {
+                const enabled = coerceEnabledValue(value);
+                await context.shadowClient.publishServiceCommand({
+                    cmd: "param_set",
+                    data: { ...this.globalMowingSettings(data), rid_switch: enabled ? 1 : 0 },
                 });
                 return;
             }
@@ -960,7 +961,6 @@ class AnthbotGenieAdapter extends utils.Adapter {
                         ...this.globalMowingSettings(data),
                         mow_head: intValue,
                         enable_adaptive_head: 0,
-                        rid_switch: control.startsWith("zoneMowing.") ? 1 : 0,
                     },
                 });
                 return;
@@ -975,7 +975,6 @@ class AnthbotGenieAdapter extends utils.Adapter {
                         ...this.globalMowingSettings(data),
                         mow_head: mowHead,
                         enable_adaptive_head: enabled ? 0 : 1,
-                        rid_switch: control.startsWith("zoneMowing.") ? 1 : 0,
                     },
                 });
                 return;
@@ -988,7 +987,7 @@ class AnthbotGenieAdapter extends utils.Adapter {
                 });
                 await context.shadowClient.publishServiceCommand({
                     cmd: "param_set",
-                    data: { ...this.globalMowingSettings(data), mow_count: intValue, rid_switch: 1 },
+                    data: { ...this.globalMowingSettings(data), mow_count: intValue },
                 });
                 return;
             }
@@ -1049,8 +1048,8 @@ class AnthbotGenieAdapter extends utils.Adapter {
             case "nearChargerMowing.enabled": {
                 const enabled = coerceEnabledValue(value);
                 await context.shadowClient.publishServiceCommand({
-                    cmd: "ctl_near_chg_mow",
-                    data: { switch: enabled ? 1 : 0 },
+                    cmd: "param_set",
+                    data: { ...this.globalMowingSettings(data), nest_switch: enabled ? 1 : 0 },
                 });
                 return;
             }
@@ -1100,14 +1099,6 @@ class AnthbotGenieAdapter extends utils.Adapter {
                 });
                 return;
             }
-            case "cameraEnabled": {
-                const enabled = coerceEnabledValue(value);
-                await context.shadowClient.publishServiceCommand({
-                    cmd: "camera_switch",
-                    data: { switch: enabled ? 1 : 0 },
-                });
-                return;
-            }
             default:
                 throw new AnthbotGenieError(`Unsupported control '${control}'`);
         }
@@ -1115,12 +1106,19 @@ class AnthbotGenieAdapter extends utils.Adapter {
 
     globalMowingSettings(data) {
         const settings = data?.param_set && typeof data.param_set === "object" ? data.param_set : {};
-        return {
+        const result = {
             cutter_height: typeof settings.cutter_height === "number" ? settings.cutter_height : 30,
             mow_count: typeof settings.mow_count === "number" ? settings.mow_count : 1,
             mow_head: typeof settings.mow_head === "number" ? settings.mow_head : 0,
             enable_adaptive_head: typeof settings.enable_adaptive_head === "number" ? settings.enable_adaptive_head : 1,
         };
+        if (typeof settings.rid_switch === "number") {
+            result.rid_switch = settings.rid_switch;
+        }
+        if (typeof settings.nest_switch === "number") {
+            result.nest_switch = settings.nest_switch;
+        }
+        return result;
     }
 
     nearChargerMowingSettings(data, withDefaults = false) {

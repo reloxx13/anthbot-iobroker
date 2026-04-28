@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "anthbot-genie",
-    "version": "0.1.0-beta.1",
+    "version": "0.1.0-beta.2",
     "news": {
+      "0.1.0-beta.2": {
+        "en": "Add full-map edge trimming control.\nRemove unsupported camera and docking resume controls.\nFix near-charger mowing enable control to use the mower shadow setting.",
+        "de": "Vollflächen-Kantenschnitt-Steuerung hinzugefügt.\nNicht unterstützte Kamera- und Docking-Fortsetzen-Steuerungen entfernt.\nSteuerung zum Aktivieren des Mähens nahe der Ladestation auf die Mäher-Shadow-Einstellung korrigiert.",
+        "ru": "Добавлено управление обрезкой краев для полного кошения карты.\nУдалены неподдерживаемые элементы управления камерой и продолжением возврата на базу.\nИсправлено включение кошения возле зарядной станции через настройку shadow косилки.",
+        "pt": "Adicionado controle de corte de borda para corte de mapa completo.\nRemovidos controles não suportados de câmera e retomada do retorno à base.\nCorrigido o controle de ativação do corte perto da estação para usar a configuração shadow do cortador.",
+        "nl": "Besturing voor randmaaien bij volledig kaartmaaien toegevoegd.\nNiet-ondersteunde camera- en docking-hervatbesturing verwijderd.\nBesturing voor maaien nabij het laadstation gebruikt nu de shadow-instelling van de maaier.",
+        "fr": "Ajout du contrôle de coupe des bordures pour la tonte de toute la carte.\nSuppression des contrôles non pris en charge pour la caméra et la reprise du retour à la station.\nCorrection du contrôle d'activation de la tonte près de la station avec le réglage shadow de la tondeuse.",
+        "it": "Aggiunto il controllo del taglio dei bordi per il taglio completo della mappa.\nRimossi i controlli non supportati per fotocamera e ripresa del ritorno alla base.\nCorretto il controllo di attivazione del taglio vicino alla stazione usando l'impostazione shadow del rasaerba.",
+        "es": "Añadido control de corte de bordes para el corte de mapa completo.\nEliminados los controles no compatibles de cámara y reanudación del retorno a la base.\nCorregido el control para activar el corte cerca de la estación usando la configuración shadow del cortacésped.",
+        "pl": "Dodano sterowanie koszeniem krawędzi dla pełnego koszenia mapy.\nUsunięto nieobsługiwane sterowanie kamerą i wznawianiem powrotu do stacji.\nPoprawiono włączanie koszenia przy stacji, aby używało ustawienia shadow kosiarki.",
+        "uk": "Додано керування обрізанням країв для повного косіння карти.\nВилучено непідтримувані елементи керування камерою та продовженням повернення до бази.\nВиправлено вмикання косіння біля зарядної станції через налаштування shadow косарки.",
+        "zh-cn": "添加全地图割草的边缘修剪控制。\n移除不支持的摄像头和继续回充控制。\n修正充电站附近割草启用控制，改为使用割草机 shadow 设置。"
+      },
       "0.1.0-beta.1": {
         "en": "Add expanded diagnostics for model names, region fallback, errors, RTK, map, firmware, OTA, network, and GPS/location data.\nCorrect consumable maintenance mapping to blades, cameras, and charging port.\nRefactor the state layout into grouped metrics, diagnostics, consumables, zones, raw shadows, and controls.",
         "de": "Erweiterte Diagnosewerte für Modellnamen, Region-Fallback, Fehler, RTK, Karte, Firmware, OTA, Netzwerk und GPS/Standort hinzugefügt.\nWartungszuordnung für Klingen, Kameras und Ladeport korrigiert.\nState-Struktur in gruppierte Metriken, Diagnosewerte, Verbrauchsmaterial, Zonen, Rohdaten-Shadows und Steuerungen umgebaut.",

@@ -29,8 +29,8 @@ An example ioBroker Blockly with conditions for mower automation is available in
 - Polling of property and service shadows
 - Status states for connection, online state, battery, mower status, charging state, mowing time, mowing area, map, error, and consumable lifetime
 - Diagnostic states for RTK, firmware, OTA, network, GPS/location, map lifecycle, and mower error data
-- Writable control states for full-map mowing, zone mowing, cutting height, voice volume, custom mowing direction, rain settings, camera, and mowing near the charging pile
-- Command states for full mowing, stop, return to dock, grass dump, disk maintenance mode, edge mowing, mowing near the charging pile, refresh, manual zone mowing, and automatic zone mowing
+- Writable control states for full-map mowing, zone mowing, cutting height, voice volume, custom mowing direction, rain settings, and mowing near the charging pile
+- Command states for full mowing, stop, return to dock, pause return to dock, grass dump, disk maintenance mode, edge mowing, mowing near the charging pile, refresh, manual zone mowing, and automatic zone mowing
 - Manual and automatic zone metadata as JSON states
 - Raw property, service, and area payloads for troubleshooting
 
@@ -136,6 +136,7 @@ Writable control states update mower settings through the Anthbot IoT service sh
 | State | Type | Range | Description |
 | --- | --- | --- | --- |
 | `<serial>.controls.fullMapMowing.mowHeight` | number | `30..70 mm`, 5 mm steps | Set full-map cutting height |
+| `<serial>.controls.fullMapMowing.includeEdgeTrimming` | boolean | `true`/`false` | Include edge trimming in full-map mowing |
 | `<serial>.controls.fullMapMowing.customMowingDirection` | number | `0..180 deg` | Set full-map custom mowing direction |
 | `<serial>.controls.fullMapMowing.customMowingDirectionEnabled` | boolean | `true`/`false` | Enable or disable full-map custom mowing direction |
 | `<serial>.controls.zoneMowing.mowHeight` | number | `30..70 mm`, 5 mm steps | Set zone mowing cutting height |
@@ -152,8 +153,6 @@ Writable control states update mower settings through the Anthbot IoT service sh
 | `<serial>.controls.nearChargerMowing.mowCount` | number | `1..3` | Set mowing passes near the charging pile |
 | `<serial>.controls.nearChargerMowing.obstacleAvoidanceEnabled` | boolean | `true`/`false` | Enable or disable obstacle avoidance near the charging pile |
 | `<serial>.controls.nearChargerMowing.obstacleAvoidanceLevel` | number | `0..2` | Set obstacle avoidance level near the charging pile |
-| `<serial>.controls.cameraEnabled` | boolean | `true`/`false` | Enable or disable the camera |
-
 ### Commands
 
 Command states are writable. Button states are reset to `false` after execution. Zone command states are reset to an empty string after execution. Consumable reset buttons are exposed under `consumable`.
@@ -165,7 +164,6 @@ Command states are writable. Button states are reset to `false` after execution.
 | `<serial>.commands.device.cancelRtkAntennaMoved` | boolean | Cancel the RTK antenna moved warning |
 | `<serial>.commands.docking.startReturn` | boolean | Return to the charging dock |
 | `<serial>.commands.docking.pauseReturn` | boolean | Pause return to the charging dock |
-| `<serial>.commands.docking.resumeReturn` | boolean | Resume return to the charging dock |
 | `<serial>.commands.maintenance.startGrassDump` | boolean | Start grass dump |
 | `<serial>.commands.maintenance.startDiskMaintenance` | boolean | Start disk maintenance mode |
 | `<serial>.commands.mowing.startFullMap` | boolean | Start full-map mowing |
@@ -180,7 +178,7 @@ Command states are writable. Button states are reset to `false` after execution.
 | `<serial>.commands.mowing.end` | boolean | End mowing |
 | `<serial>.commands.mowing.stopPoint` | boolean | Stop point mowing |
 
-Availability of `commands.maintenance.startDiskMaintenance`, `commands.maintenance.startGrassDump`, `commands.mowing.startEdge`, `commands.mowing.startNearCharger`, `commands.mowing.startPoint`, and `controls.cameraEnabled` may depend on mower model, firmware, current mower mode, and map/edge data.
+Availability of `commands.maintenance.startDiskMaintenance`, `commands.maintenance.startGrassDump`, `commands.mowing.startEdge`, `commands.mowing.startNearCharger`, and `commands.mowing.startPoint` may depend on mower model, firmware, current mower mode, and map/edge data.
 
 ### Zones
 
@@ -272,6 +270,13 @@ This ioBroker adapter is an independent project, but it builds on public API res
 ## Changelog
 
 ### **WORK IN PROGRESS**
+
+### 0.1.0-beta.2
+
+- Add full-map mowing control to include edge trimming.
+- Remove the unsupported camera-enabled control.
+- Fix near-charger mowing enable control to use the mower shadow setting.
+- Remove the docking resume-return command because the cloud command is not working reliably.
 
 ### 0.1.0-beta.1
 
