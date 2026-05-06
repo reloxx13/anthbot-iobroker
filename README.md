@@ -275,6 +275,10 @@ This ioBroker adapter is an independent project, but it builds on public API res
 
 ### **WORK IN PROGRESS**
 
+### 0.1.2
+
+- Limit `io-package.json` news entries for the ioBroker repository builder.
+
 ### 0.1.1
 
 - Fix consumable lifetime mapping to match the Anthbot app labels: blades, cameras, and charging port.
