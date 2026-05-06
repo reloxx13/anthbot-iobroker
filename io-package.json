@@ -93,19 +93,6 @@
         "pl": "Dodano konfigurację automatycznego scalania Dependabot i zaktualizowano metadane repozytorium.",
         "uk": "Додано конфігурацію автоматичного злиття Dependabot і оновлено метадані репозиторію.",
         "zh-cn": "添加 Dependabot 自动合并配置并更新仓库元数据。"
-      },
-      "0.0.6": {
-        "en": "Fix repository checker issues and move admin config translations to i18n files.",
-        "de": "Probleme der Repository-Prüfung behoben und Admin-Konfigurationsübersetzungen in i18n-Dateien verschoben.",
-        "ru": "Исправлены проблемы проверки репозитория, а переводы конфигурации администратора перенесены в файлы i18n.",
-        "pt": "Corrigidos problemas do verificador de repositório e movidas as traduções da configuração de administração para arquivos i18n.",
-        "nl": "Repositorycontroleproblemen opgelost en vertalingen van de adminconfiguratie verplaatst naar i18n-bestanden.",
-        "fr": "Correction des problèmes du vérificateur de dépôt et déplacement des traductions de la configuration admin vers des fichiers i18n.",
-        "it": "Risolti i problemi del controllo repository e spostate le traduzioni della configurazione admin nei file i18n.",
-        "es": "Se corrigieron problemas del verificador del repositorio y se movieron las traducciones de la configuración de administración a archivos i18n.",
-        "pl": "Naprawiono problemy wykryte przez kontroler repozytorium i przeniesiono tłumaczenia konfiguracji administratora do plików i18n.",
-        "uk": "Виправлено проблеми перевірки репозиторію та перенесено переклади конфігурації адміністратора до файлів i18n.",
-        "zh-cn": "修复仓库检查器问题，并将管理配置翻译移至 i18n 文件。"
       }
     },
     "titleLang": {
