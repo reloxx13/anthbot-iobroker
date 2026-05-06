@@ -109,7 +109,7 @@
       "zh-cn": "Anthbot Genie"
     },
     "desc": {
-      "en": "Unofficial cloud adapter for Anthbot Genie mower control and status polling",
+      "en": "Unofficial cloud adapter for Anthbot Genie robotic lawn mowers with telemetry, diagnostics, consumables, zones, and controls",
       "de": "Inoffizieller Cloud-Adapter für Statusabfrage und Steuerung von Anthbot Genie",
       "ru": "Неофициальный облачный адаптер для управления газонокосилками Anthbot Genie и опроса состояния",
       "pt": "Adaptador de nuvem não oficial para controlar cortadores Anthbot Genie e consultar o estado",
@@ -132,11 +132,18 @@
     "extIcon": "https://raw.githubusercontent.com/reloxx13/ioBroker.anthbot-genie/main/admin/anthbot-genie.png",
     "readme": "https://github.com/reloxx13/ioBroker.anthbot-genie/blob/main/README.md",
     "keywords": [
+      "iobroker",
+      "iobroker-adapter",
       "anthbot",
-      "genie",
+      "anthbot-genie",
+      "robotic-lawn-mower",
+      "lawn-mower",
       "mower",
-      "robot",
-      "lawn"
+      "smart-home",
+      "home-automation",
+      "rtk",
+      "cloud-api",
+      "iot"
     ],
     "platform": "Javascript/Node.js",
     "mode": "daemon",
