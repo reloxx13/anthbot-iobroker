@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "anthbot-genie",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "news": {
+      "0.1.1": {
+        "en": "Fix consumable lifetime mapping so blades, cameras, and charging port match the Anthbot app.\nHighlight extended telemetry, diagnostics, controls, and raw payload coverage in the README.\nClean up repository readiness metadata and poll timer handling.",
+        "de": "Zuordnung der Verbrauchsmaterial-Lebensdauer korrigiert, sodass Klingen, Kameras und Ladeport mit der Anthbot-App übereinstimmen.\nErweiterte Telemetrie, Diagnose, Steuerungen und Rohdatenabdeckung in der README hervorgehoben.\nRepository-Metadaten und Poll-Timer-Verhalten bereinigt.",
+        "ru": "Исправлено сопоставление срока службы расходников, чтобы лезвия, камеры и зарядный порт соответствовали приложению Anthbot.\nВ README выделены расширенная телеметрия, диагностика, элементы управления и необработанные данные.\nОчищены метаданные готовности репозитория и обработка таймера опроса.",
+        "pt": "Corrigido o mapeamento da vida útil dos consumíveis para que lâminas, câmeras e porta de carregamento correspondam ao app Anthbot.\nDestacada no README a cobertura ampliada de telemetria, diagnóstico, controles e dados brutos.\nMetadados de prontidão do repositório e temporizador de polling ajustados.",
+        "nl": "Mapping van verbruiksl levensduur gecorrigeerd zodat messen, camera's en laadpoort overeenkomen met de Anthbot-app.\nUitgebreide telemetrie, diagnostiek, bediening en ruwe payloads duidelijker in de README gezet.\nRepository-readinessmetadata en polltimer-afhandeling opgeschoond.",
+        "fr": "Correction du mappage de la durée de vie des consommables afin que les lames, caméras et port de charge correspondent à l'application Anthbot.\nMise en avant dans le README de la télémétrie, des diagnostics, des contrôles et des données brutes étendus.\nNettoyage des métadonnées de dépôt et de la gestion du minuteur de polling.",
+        "it": "Corretto il mapping della vita utile dei consumabili in modo che lame, fotocamere e porta di ricarica corrispondano all'app Anthbot.\nEvidenziata nel README la copertura estesa di telemetria, diagnostica, controlli e payload grezzi.\nRipuliti i metadati di repository readiness e la gestione del timer di polling.",
+        "es": "Corregido el mapeo de vida útil de consumibles para que cuchillas, cámaras y puerto de carga coincidan con la app Anthbot.\nDestacada en el README la cobertura ampliada de telemetría, diagnóstico, controles y datos sin procesar.\nLimpiados los metadatos de preparación del repositorio y el manejo del temporizador de sondeo.",
+        "pl": "Poprawiono mapowanie żywotności materiałów eksploatacyjnych, aby ostrza, kamery i port ładowania odpowiadały aplikacji Anthbot.\nW README podkreślono rozszerzoną telemetrię, diagnostykę, sterowanie i surowe dane.\nUporządkowano metadane gotowości repozytorium i obsługę timera odpytywania.",
+        "uk": "Виправлено зіставлення ресурсу витратних матеріалів, щоб леза, камери й зарядний порт відповідали застосунку Anthbot.\nУ README підкреслено розширену телеметрію, діагностику, керування та сирі дані.\nОчищено метадані готовності репозиторію та обробку таймера опитування.",
+        "zh-cn": "修正耗材寿命映射，使刀片、摄像头和充电端口与 Anthbot 应用一致。\n在 README 中突出扩展的遥测、诊断、控制和原始数据覆盖。\n清理仓库就绪元数据和轮询计时器处理。"
+      },
       "0.1.0": {
         "en": "Add expanded diagnostics, grouped state layout, consumable resets, mower action commands, and writable mowing controls.\nAdd full-map edge trimming control and fix near-charger mowing enable control.\nRemove unsupported camera and docking resume controls.",
         "de": "Erweiterte Diagnosewerte, gruppierte State-Struktur, Verbrauchsmaterial-Resets, Mäher-Aktionsbefehle und schreibbare Mähsteuerungen hinzugefügt.\nVollflächen-Kantenschnitt-Steuerung hinzugefügt und Aktivierung des Mähens nahe der Ladestation korrigiert.\nNicht unterstützte Kamera- und Docking-Fortsetzen-Steuerungen entfernt.",

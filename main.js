@@ -12,6 +12,7 @@ const {
     autoZones,
     compactZonePayload,
     coerceEnabledValue,
+    consumableLifetimes,
     errorDescription,
     generalMowerStatus,
     isLikelyAuthenticationError,
@@ -555,6 +556,7 @@ class AnthbotGenieAdapter extends utils.Adapter {
         const rtkAntennaMoved = coerceEnabledValue(data?.rtk_move_sta?.value);
         const serviceCommand = typeof data?._service_reported?.cmd === "string" ? data._service_reported.cmd : "";
         const pose = data?.pose && typeof data.pose === "object" ? data.pose : {};
+        const consumables = consumableLifetimes(data);
 
         const updates = {
             "info.alias": context.device.alias,
@@ -567,9 +569,9 @@ class AnthbotGenieAdapter extends utils.Adapter {
             "info.lastPoll": new Date().toISOString(),
 
             // 2026-04-26: The cloud API misspells "percent" as "pecent" in the robot_maintenance object, so we need to use the wrong spelling here to get the data until it's fixed upstream.
-            "consumable.chargingPort.life": typeof data.robot_maintenance?.rc_pecent === "number" ? data.robot_maintenance.rc_pecent : null,
-            "consumable.cameras.life": typeof data.robot_maintenance?.cl_pecent === "number" ? data.robot_maintenance.cl_pecent : null,
-            "consumable.blades.life": typeof data.robot_maintenance?.ccp_pecent === "number" ? data.robot_maintenance.ccp_pecent : null,
+            "consumable.chargingPort.life": consumables.chargingPort,
+            "consumable.cameras.life": consumables.cameras,
+            "consumable.blades.life": consumables.blades,
 
             "metrics.batteryLevel": typeof data.elec === "number" ? data.elec : null,
             "metrics.status.mower": generalMowerStatus(data),

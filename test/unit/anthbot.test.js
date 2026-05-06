@@ -10,6 +10,7 @@ const {
     autoZones,
     compactZonePayload,
     coerceEnabledValue,
+    consumableLifetimes,
     errorDescription,
     generalMowerStatus,
     isCharging,
@@ -122,6 +123,22 @@ describe("lib/anthbot helpers", () => {
     });
 
     describe("protocol helpers", () => {
+        it("maps consumable lifetime values to the names shown in the Anthbot app", () => {
+            const lifetimes = consumableLifetimes({
+                robot_maintenance: {
+                    ccp_pecent: 99,
+                    cl_pecent: 98,
+                    rc_pecent: 91,
+                },
+            });
+
+            assert.deepEqual(lifetimes, {
+                blades: 91,
+                cameras: 98,
+                chargingPort: 99,
+            });
+        });
+
         it("keeps custom direction enabled semantics aligned with Anthbot payloads", () => {
             assert.equal(isCustomDirectionEnabled({ param_set: { enable_adaptive_head: 0 } }), true);
             assert.equal(isCustomDirectionEnabled({ param_set: { enable_adaptive_head: 1 } }), false);

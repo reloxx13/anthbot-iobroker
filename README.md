@@ -13,9 +13,11 @@
 
 [![NPM](https://nodei.co/npm/iobroker.anthbot-genie.png?downloads=true)](https://nodei.co/npm/iobroker.anthbot-genie/)
 
-Unofficial ioBroker adapter for [Anthbot Genie robotic lawn mowers](https://de.anthbot.com/products/genie-mahroboter).
+Unofficial ioBroker adapter for [Anthbot Genie robotic lawn mowers](https://de.anthbot.com/products/genie-mahroboter), focused on detailed Genie telemetry, diagnostics, and mower control.
 
-The adapter connects to the Anthbot cloud account, discovers bound mowers, reads cloud and IoT shadow data, and exposes status, settings, mower commands, zone data, and raw diagnostic payloads in ioBroker.
+The adapter connects to the Anthbot cloud account, discovers bound mowers, reads cloud and IoT shadow data, and exposes a broad state tree for status, settings, mower commands, zone data, consumables, location, diagnostics, and raw troubleshooting payloads in ioBroker.
+
+It is intended for users who want more than a basic online/battery/status view: RTK and base station state, firmware and OTA details, network and SIM information, GPS and pose data, map lifecycle timestamps, mower error details, consumable lifetimes, rain settings, zone metadata, and writable mowing controls are exposed as ioBroker states.
 
 This adapter is currently in testing. Please report feedback and test results in the [ioBroker forum test thread](https://forum.iobroker.net/topic/84392).
 
@@ -27,12 +29,14 @@ An example ioBroker Blockly with conditions for mower automation is available in
 - Automatic discovery of mowers bound to the configured Anthbot account
 - Region and IoT endpoint lookup per mower
 - Polling of property and service shadows
-- Status states for connection, online state, battery, mower status, charging state, mowing time, mowing area, map, error, and consumable lifetime
-- Diagnostic states for RTK, firmware, OTA, network, GPS/location, map lifecycle, and mower error data
-- Writable control states for full-map mowing, zone mowing, cutting height, voice volume, custom mowing direction, rain settings, and mowing near the charging pile
-- Command states for full mowing, stop, return to dock, pause return to dock, grass dump, disk maintenance mode, edge mowing, mowing near the charging pile, refresh, manual zone mowing, and automatic zone mowing
-- Manual and automatic zone metadata as JSON states
-- Raw property, service, and area payloads for troubleshooting
+- Detailed status states for connection, online state, battery, mower status, charging state, mowing time, mowing area, map status, errors, active mowing mode, point mowing, and zone counts
+- Diagnostic states for RTK fix, RTK base station, moved antenna warnings, firmware versions, OTA progress, WiFi, cellular, SIM, Bluetooth, camera/map flags, obstacle avoidance, security flags, system timestamps, and mower error data
+- Location states for anti-loss GPS coordinates and local mower pose
+- Consumable lifetime states and reset buttons for charging port, cameras, and blades
+- Writable control states for full-map mowing, zone mowing, cutting height, voice volume, custom mowing direction, obstacle avoidance, rain settings, and mowing near the charging pile
+- Command states for full mowing, stop, return to dock, pause return to dock, grass dump, disk maintenance mode, edge mowing, mowing near the charging pile, point mowing, refresh, manual zone mowing, and automatic zone mowing
+- Manual and automatic zone metadata as JSON states, including active manual zone IDs
+- Raw property shadow, service shadow, and area definition payloads for troubleshooting and automation debugging
 
 ## Requirements
 
@@ -271,6 +275,10 @@ This ioBroker adapter is an independent project, but it builds on public API res
 
 ### **WORK IN PROGRESS**
 
+### 0.1.1
+
+- Fix consumable lifetime mapping to match the Anthbot app labels: blades, cameras, and charging port.
+- Highlight the extended telemetry, diagnostics, controls, and raw payload coverage in the README.
 - Clean up repository readiness metadata and poll timer handling for ioBroker best practices.
 - Align consumable lifetime and network diagnostic state roles with the documented ioBroker state role list.
 
