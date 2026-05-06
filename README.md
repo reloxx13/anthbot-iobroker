@@ -9,7 +9,7 @@
 ![GitHub release](https://img.shields.io/github/v/release/reloxx13/ioBroker.anthbot-genie)
 ![License](https://img.shields.io/github/license/reloxx13/ioBroker.anthbot-genie)
 ![ioBroker phase](https://img.shields.io/badge/ioBroker%20phase-testing-yellow)
-[![ioBroker forum](https://img.shields.io/badge/ioBroker-forum-blue)](https://forum.iobroker.net/topic/84392/test-adapter-anthbot-genie-v0.0.x-npm-github)
+[![ioBroker forum](https://img.shields.io/badge/ioBroker-forum-blue)](https://forum.iobroker.net/topic/84392)
 
 [![NPM](https://nodei.co/npm/iobroker.anthbot-genie.png?downloads=true)](https://nodei.co/npm/iobroker.anthbot-genie/)
 
@@ -17,9 +17,9 @@ Unofficial ioBroker adapter for [Anthbot Genie robotic lawn mowers](https://de.a
 
 The adapter connects to the Anthbot cloud account, discovers bound mowers, reads cloud and IoT shadow data, and exposes status, settings, mower commands, zone data, and raw diagnostic payloads in ioBroker.
 
-This adapter is currently in testing. Please report feedback and test results in the [ioBroker forum Test Adapter anthbot-genie v0.0.x npm/GitHub thread](https://forum.iobroker.net/topic/84392/test-adapter-anthbot-genie-v0.0.x-npm-github).
+This adapter is currently in testing. Please report feedback and test results in the [ioBroker forum test thread](https://forum.iobroker.net/topic/84392).
 
-An example ioBroker Blockly with conditions for mower automation is available in the [Blockly automation example](https://forum.iobroker.net/topic/84392/test-adapter-anthbot-genie-v0.0.x-npm-github/2?_=1777117406598).
+An example ioBroker Blockly with conditions for mower automation is available in the [Blockly automation example](https://forum.iobroker.net/topic/84392/2).
 
 ## Features
 

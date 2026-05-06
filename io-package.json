@@ -130,7 +130,7 @@
     },
     "icon": "anthbot-genie.png",
     "extIcon": "https://raw.githubusercontent.com/reloxx13/ioBroker.anthbot-genie/main/admin/anthbot-genie.png",
-    "readme": "https://github.com/reloxx13/ioBroker.anthbot-genie/blob/master/README.md",
+    "readme": "https://github.com/reloxx13/ioBroker.anthbot-genie/blob/main/README.md",
     "keywords": [
       "anthbot",
       "genie",
